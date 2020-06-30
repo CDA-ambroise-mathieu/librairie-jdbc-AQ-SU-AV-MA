@@ -49,7 +49,7 @@ bin/*.class
 hs_err_pid*
 
 ### custom ###
-/projet-librairie-AQ-SU-AV-MA/bin/
-/projet-librairie-AQ-SU-AV-MA/.classpath
-/projet-librairie-AQ-SU-AV-MA/.project
-/projet-librairie-AQ-SU-AV-MA/.settings/
+projet-librairie-AQ-SU-AV-MA/bin/
+projet-librairie-AQ-SU-AV-MA/.classpath
+projet-librairie-AQ-SU-AV-MA/.project
+projet-librairie-AQ-SU-AV-MA/.settings/
