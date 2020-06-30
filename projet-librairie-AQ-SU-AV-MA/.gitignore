@@ -37,7 +37,7 @@ local.properties
 # Code Recommenders
 .recommenders/
 ### Java ###
-*.class
+bin/*.class
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 # Package Files #
