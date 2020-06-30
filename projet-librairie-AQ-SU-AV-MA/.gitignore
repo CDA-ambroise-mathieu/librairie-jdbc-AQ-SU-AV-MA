@@ -64,7 +64,7 @@ local.properties
 *_REMOTE_*.txt
 ### Java ###
 # Compiled class file
-*.class
+bin/*.class
 # Log file
 *.log
 # BlueJ files
