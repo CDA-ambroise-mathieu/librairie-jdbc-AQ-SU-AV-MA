@@ -32,6 +32,15 @@ public class Client {
 		this.motDePasse = motDePasse;
 	}
 
+	
+	
+	public Client(int idBDD ,String nom, String prenom ) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.idBDD = idBDD;
+	}
+
 	public int getIdBDD() {
 		return idBDD;
 	}
