@@ -7,31 +7,31 @@ public class Livre {
 	private String titre;
 	private String auteur;
 	private String edition;
-	private String parution;
+	private String anneeParution;
 	private int quantiteEnStock;
 	private double prixUnitaire;
 
 	// Constructeur sans autoincr idBDD
-	public Livre(String libelle, String titre, String auteur, String edition, String parution, int quantiteEnStock,
+	public Livre(String libelle, String titre, String auteur, String edition, String anneeParution, int quantiteEnStock,
 			double prixUnitaire) {
 		this.libelle = libelle;
 		this.titre = titre;
 		this.auteur = auteur;
 		this.edition = edition;
-		this.parution = parution;
+		this.anneeParution = anneeParution;
 		this.quantiteEnStock = quantiteEnStock;
 		this.prixUnitaire = prixUnitaire;
 	}
 
 	// Constructeur avec id pour BDD auto incr
-	public Livre(int idBDD, String libelle, String titre, String auteur, String edition, String parution,
+	public Livre(int idBDD, String libelle, String titre, String auteur, String edition, String anneeParution,
 			int quantiteEnStock, double prixUnitaire) {
 		this.idBDD = idBDD;
 		this.libelle = libelle;
 		this.titre = titre;
 		this.auteur = auteur;
 		this.edition = edition;
-		this.parution = parution;
+		this.anneeParution = anneeParution;
 		this.quantiteEnStock = quantiteEnStock;
 		this.prixUnitaire = prixUnitaire;
 	}
@@ -75,12 +75,12 @@ public class Livre {
 		this.edition = edition;
 	}
 
-	public String getParution() {
-		return parution;
+	public String getAnneeParution() {
+		return anneeParution;
 	}
 
-	public void setParution(String parution) {
-		this.parution = parution;
+	public void setAnneeParution(String anneeParution) {
+		this.anneeParution = anneeParution;
 	}
 
 	public int getQuantiteEnStock() {
@@ -102,7 +102,7 @@ public class Livre {
 	@Override
 	public String toString() {
 		return "Livre [libelle=" + libelle + ", titre=" + titre + ", auteur=" + auteur + ", edition=" + edition
-				+ ", parution=" + parution + ", quantiteEnStock=" + quantiteEnStock + ", prixUnitaire=" + prixUnitaire
+				+ ", parution=" + anneeParution + ", quantiteEnStock=" + quantiteEnStock + ", prixUnitaire=" + prixUnitaire
 				+ "]";
 	}
 
