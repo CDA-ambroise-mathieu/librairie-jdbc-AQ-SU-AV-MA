@@ -32,8 +32,8 @@ public class AffichageConsole {
 					System.out.println();
 					choixMenuLibraire(choix);
 				} else {
+					scanner.nextLine();
 					System.out.println("Veuillez n'entrer que des chiffres !");
-					menuPrincipal();
 				}
 
 				break;
@@ -49,12 +49,11 @@ public class AffichageConsole {
 					System.out.println();
 					choixMenuClient(choix);
 				} else {
+					scanner.nextLine();
 					System.out.println("Veuillez n'entrer que des chiffres !");
-					menuPrincipal();
 				}
 				break;
-
-			default:
+			case "invite":
 				System.out.println("(1) Connexion");
 				System.out.println("(2) Inscription");
 				System.out.println("(3) Lister les livres");
@@ -67,8 +66,8 @@ public class AffichageConsole {
 					scanner.nextLine();
 					choixMenuUtilisateur(choix);
 				} else {
+					scanner.nextLine();
 					System.out.println("Veuillez n'entrer que des chiffres !");
-					menuPrincipal();
 				}
 				break;
 			}
@@ -135,6 +134,7 @@ public class AffichageConsole {
 				break;
 			}
 		} else {
+			scanner.nextLine();
 			System.out.println("Veuillez n'entrer que des chiffres !");
 			inscription();
 		}
@@ -189,6 +189,7 @@ public class AffichageConsole {
 				scanner.nextLine();
 				this.choixSousMenuLibraire(pChoixML, pChoixSML);
 			} else {
+				scanner.nextLine();
 				System.out.println("Veuillez n'entrer que des chiffres !");
 			}
 			break;
@@ -203,6 +204,7 @@ public class AffichageConsole {
 				scanner.nextLine();
 				this.choixSousMenuLibraire(pChoixML, pChoixSML);
 			} else {
+				scanner.nextLine();
 				System.out.println("Veuillez n'entrer que des chiffres !");
 			}
 			break;
@@ -219,6 +221,7 @@ public class AffichageConsole {
 				scanner.nextLine();
 				this.choixSousMenuLibraire(pChoixML, pChoixSML);
 			} else {
+				scanner.nextLine();
 				System.out.println("Veuillez n'entrer que des chiffres !");
 			}
 			break;
