@@ -7,7 +7,7 @@ public class Client {
 	private String nom;
 	private String prenom;
 
-	private int idBDD;
+	private int id;
 	private String numeroCompte;
 	private String login;
 	private String motDePasse;
@@ -22,18 +22,27 @@ public class Client {
 		this.motDePasse = motDePasse;
 	}
 
-	public Client(String nom, String prenom, int idBDD, String numeroCompte, String login, String motDePasse) {
+	public Client( int id, String nom, String prenom, String numeroCompte, String login, String motDePasse) {
 		super();
+		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
-		this.idBDD = idBDD;
 		this.numeroCompte = numeroCompte;
 		this.login = login;
 		this.motDePasse = motDePasse;
 	}
 
-	public int getIdBDD() {
-		return idBDD;
+	
+	
+	public Client(int id ,String nom, String prenom ) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public String getNumeroCompte() {
@@ -60,8 +69,8 @@ public class Client {
 		return role;
 	}
 
-	public void setIdBDD(int idBDD) {
-		this.idBDD = idBDD;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setNumeroCompte(String numeroCompte) {
@@ -86,7 +95,7 @@ public class Client {
 
 	@Override
 	public String toString() {
-		return "Client [idBDD=" + idBDD + ", numeroCompte=" + numeroCompte + ", login=" + login + ", motDePasse="
+		return "Client [id=" + id + ", numeroCompte=" + numeroCompte + ", login=" + login + ", motDePasse="
 				+ motDePasse + "]";
 	}
 

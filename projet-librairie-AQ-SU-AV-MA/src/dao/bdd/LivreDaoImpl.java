@@ -37,12 +37,13 @@ public class LivreDaoImpl implements LivreDao {
 				if (resultat.next()) {
 					livre.setIdBDD(resultat.getInt(1));
 					listeDesLivres.add(livre);
+					return livre;
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return livre;
+		return null;
 	}
 
 	@Override
