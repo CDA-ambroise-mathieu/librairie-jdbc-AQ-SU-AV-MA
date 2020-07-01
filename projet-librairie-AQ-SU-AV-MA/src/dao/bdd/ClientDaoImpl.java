@@ -34,7 +34,7 @@ public class ClientDaoImpl implements ClientDao {
 
 				ResultSet resultat = ps.getGeneratedKeys();
 				if (resultat.next()) {
-					client.setIdBDD(resultat.getInt(1));
+					client.setId(resultat.getInt(1));
 					listeDesClients.add(client);
 					return client;
 				}
@@ -50,8 +50,8 @@ public class ClientDaoImpl implements ClientDao {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("DELETE FROM utilisateur WHERE idBB = ?;");
-				ps.setInt(1, client.getIdBDD());
+				PreparedStatement ps = c.prepareStatement("DELETE FROM utilisateur WHERE id = ?;");
+				ps.setInt(1, client.getId());
 				int nbr = ps.executeUpdate();
 				listeDesClients.remove(client);
 				if (0 != nbr) {
@@ -73,10 +73,10 @@ public class ClientDaoImpl implements ClientDao {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("UPDATE utilisateur SET nom= ? , prenom =? WHERE idBDD=?");
+				PreparedStatement ps = c.prepareStatement("UPDATE utilisateur SET nom= ? , prenom =? WHERE id=?");
 				ps.setString(1, pClient.getNom());
 				ps.setString(1, pClient.getPrenom());
-				ps.setInt(3, pClient.getIdBDD());
+				ps.setInt(3, pClient.getId());
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -90,13 +90,13 @@ public class ClientDaoImpl implements ClientDao {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("SELECT * FROM utilisateur WHERE idBDD = ?;");
-				ps.setInt(1, client.getIdBDD());
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM utilisateur WHERE id = ?;");
+				ps.setInt(1, client.getId());
 				ResultSet r = ps.executeQuery();
 				
 				//Avec un constructeur simple idbdd, nom , prenom
 				if (r.next()) {
-					client = new Client(r.getInt("idBDD"), r.getString("nom"), r.getString("prenom"));
+					client = new Client(r.getInt("id"), r.getString("nom"), r.getString("prenom"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -116,16 +116,16 @@ public class ClientDaoImpl implements ClientDao {
 			ResultSet vResultatSelect = ps.executeQuery();
 
 			//Exemple avec Client idbdd, nom, prenom --> autres attributs à ajouter
-			int vIdBDD;
+			int vId;
 			String vNom;
 			String vPrenom;
 
 			while (vResultatSelect.next()) {
-				vIdBDD = vResultatSelect.getInt("idBDD");
+				vId = vResultatSelect.getInt("id");
 				vNom = vResultatSelect.getString("nom");
 				vPrenom = vResultatSelect.getString("prenom");
 
-				client = new Client(vIdBDD, vNom, vPrenom);
+				client = new Client(vId, vNom, vPrenom);
 
 				listeClients.add(client);
 			}
