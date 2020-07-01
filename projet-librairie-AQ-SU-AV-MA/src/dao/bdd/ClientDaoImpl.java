@@ -26,9 +26,9 @@ public class ClientDaoImpl implements ClientDao {
 
 				ps.setString(1, client.getNom());
 				ps.setString(2, client.getPrenom());
-				ps.setString(3, client.getNumeroCompte());
-				ps.setString(4, client.getLogin());
-				ps.setString(5, client.getMotDePasse());
+				ps.setString(3, client.getMonCompte().getNumeroCompte());
+				ps.setString(4, client.getMonCompte().getLogin());
+				ps.setString(5, client.getMonCompte().getMotDePasse());
 				ps.setString(6, client.getRole());
 				ps.executeUpdate();
 
@@ -66,8 +66,7 @@ public class ClientDaoImpl implements ClientDao {
 
 	}
 
-	
-	//Update exemple du nom et prenom, recup avec id
+	// Update exemple du nom et prenom, recup avec id
 	@Override
 	public Client update(Client pClient) {
 		Connection c = MyConnection.getConnection();
@@ -93,8 +92,8 @@ public class ClientDaoImpl implements ClientDao {
 				PreparedStatement ps = c.prepareStatement("SELECT * FROM utilisateur WHERE id = ?;");
 				ps.setInt(1, client.getId());
 				ResultSet r = ps.executeQuery();
-				
-				//Avec un constructeur simple idbdd, nom , prenom
+
+				// Avec un constructeur simple idbdd, nom , prenom
 				if (r.next()) {
 					client = new Client(r.getInt("id"), r.getString("nom"), r.getString("prenom"));
 				}
@@ -115,7 +114,7 @@ public class ClientDaoImpl implements ClientDao {
 			ps = c.prepareStatement("SELECT * FROM utilisateur WHERE role = 'client';");
 			ResultSet vResultatSelect = ps.executeQuery();
 
-			//Exemple avec Client idbdd, nom, prenom --> autres attributs à ajouter
+			// Exemple avec Client idbdd, nom, prenom --> autres attributs à ajouter
 			int vId;
 			String vNom;
 			String vPrenom;
