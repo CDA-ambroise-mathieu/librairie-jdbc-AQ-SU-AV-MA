@@ -19,11 +19,15 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("insert into utilisateur (nom,prenom,role) values (?,?,?); ",
+				PreparedStatement ps = c.prepareStatement(
+						"insert into utilisateur (nom,prenom,numeroCompte,login,motDePasse,role) values (?,?,?,?,?,?); ",
 						PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, pLibraire.getNom());
 				ps.setString(2, pLibraire.getPrenom());
-				ps.setString(3, pLibraire.getRole());
+				ps.setString(3, pLibraire.getMonCompte().getNumeroCompte());
+				ps.setString(4, pLibraire.getMonCompte().getLogin());
+				ps.setString(5, pLibraire.getMonCompte().getMotDePasse());
+				ps.setString(6, pLibraire.getRole());
 				ps.executeUpdate();
 				ResultSet resultat = ps.getGeneratedKeys();
 				if (resultat.next()) {

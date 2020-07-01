@@ -2,6 +2,9 @@ package models;
 
 import java.util.List;
 
+import lombok.Data;
+
+@Data
 public class Commande {
 
 	private int id;
@@ -25,62 +28,6 @@ public class Commande {
 		this.dateCommande = pDateCommande;
 		this.nombreArticles = pNombreArticles;
 		this.livree = pLivree;
-	}
-
-	public String getDateCommande() {
-		return dateCommande;
-	}
-
-	public void setDateCommande(String dateCommande) {
-		this.dateCommande = dateCommande;
-	}
-
-	public int getNombreArticles() {
-		return nombreArticles;
-	}
-
-	public void setNombreArticles(int nombreArticles) {
-		this.nombreArticles = nombreArticles;
-	}
-
-	public List<Livre> getDesignationArticles() {
-		return designationArticles;
-	}
-
-	public void setDesignationArticles(List<Livre> designationArticles) {
-		this.designationArticles = designationArticles;
-	}
-
-	public boolean isAnnulee() {
-		return annulee;
-	}
-
-	public void setAnnulee(boolean annulee) {
-		this.annulee = annulee;
-	}
-
-	public boolean isEnCoursLivraison() {
-		return enCoursLivraison;
-	}
-
-	public void setEnCoursLivraison(boolean enCoursLivraison) {
-		this.enCoursLivraison = enCoursLivraison;
-	}
-
-	public boolean isLivree() {
-		return livree;
-	}
-
-	public void setLivree(boolean livree) {
-		this.livree = livree;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 }
