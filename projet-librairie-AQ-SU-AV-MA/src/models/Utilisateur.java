@@ -6,13 +6,13 @@ import lombok.Data;
 public class Utilisateur {
 
 	private int id;
-	private boolean inscrit;
+	private boolean inscrit = false; // comme ça pas d'ambiguïté même si sa valeur par défaut est false 
 	private String prenom;
 	private String nom;
 	
-	public Utilisateur(int pIdentifiant, boolean pInscrit, String pPrenom, String pNom) {
+	public Utilisateur(int pId, boolean pInscrit, String pPrenom, String pNom) {
 		super();
-		this.id = pIdentifiant;
+		this.id = pId;
 		this.inscrit = pInscrit;
 		this.prenom = pPrenom;
 		this.nom = pNom;
@@ -35,8 +35,8 @@ public class Utilisateur {
 	public int getId() {
 		return id;
 	}
-	public void setId(int pIdentifiant) {
-		id = pIdentifiant;
+	public void setId(int pId) {
+		id = pId;
 	}
 	public boolean isInscrit() {
 		return inscrit;
