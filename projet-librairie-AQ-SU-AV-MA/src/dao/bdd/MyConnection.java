@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-public class MyConnection {
+class MyConnection {
 	private static Connection connexion = null;
 
 	private MyConnection() {
