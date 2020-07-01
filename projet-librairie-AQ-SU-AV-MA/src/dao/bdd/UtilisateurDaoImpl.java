@@ -9,32 +9,34 @@ import java.util.List;
 
 import dao.Dao;
 import lombok.Data;
-import models.Libraire;
 import models.Utilisateur;
+
 @Data
 public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 
 	private static Utilisateur u1 = new Utilisateur();
-	
+
 	protected Connection connect = null;
-	
+
 //	public DAO(Connection conn) { // il faut la connexion avec la BDD créée pour que 
 //	ça fonctionne non ?
 //		this.connect = conn;
 //	}
-	
+
 	@Override
 	public Utilisateur save(Utilisateur pUtilisateur) {
 		Connection c = MyConnection.getConnection();
-		if(c != null) {
+		if (c != null) {
 			try {
+				// ******* Penser à vérifer s'il faut ajouter le role par défaut! *****
+				// ******* Ajouter login et mdp!
 				PreparedStatement ps = c.prepareStatement("insert into utilisateur (nom, prenom) values (?,?);",
 						PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, pUtilisateur.getNom());
 				ps.setString(2, pUtilisateur.getPrenom());
 				ps.executeUpdate();
 				ResultSet resultat = ps.getGeneratedKeys();
-				if(resultat.next()) {
+				if (resultat.next()) {
 					pUtilisateur.setId(resultat.getInt(1));
 					return pUtilisateur;
 				}
@@ -64,6 +66,8 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
+
+				// ajouter login et mdp
 				PreparedStatement ps = c
 						.prepareStatement("UPDATE utilisateur \r\n" + "SET nom= ? , prenom =?\r\n" + "WHERE id=?");
 				ps.setString(1, pUtilisateur.getNom());
@@ -79,15 +83,16 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 
 	@Override
 	public Utilisateur findById(int pIdentifiant) {
-		Utilisateur pUtilisateur = null; 
+		Utilisateur pUtilisateur = null;
 		Connection c = MyConnection.getConnection();
-		if(c != null) {
+		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement("select * from utilisateur where num = ?;");
 				ps.setInt(1, pIdentifiant);
 				ResultSet r = ps.executeQuery();
-				if(r.next())
-					pUtilisateur = new Utilisateur(r.getInt("identifiant"), r.getBoolean("inscrit"), r.getString("prenom"), r.getString("nom"));
+				if (r.next())
+					pUtilisateur = new Utilisateur(r.getInt("identifiant"), r.getBoolean("inscrit"),
+							r.getString("prenom"), r.getString("nom"));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -98,6 +103,7 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 	@Override
 	public List<Utilisateur> getAll() {
 
+		// Penser à ajouter login et mdp.
 		String request = "SELECT * from utilisateur;";
 		PreparedStatement ps;
 		ArrayList<Utilisateur> listeRetour = new ArrayList<>();
@@ -124,6 +130,5 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 		}
 		return listeRetour;
 	}
-
 
 }

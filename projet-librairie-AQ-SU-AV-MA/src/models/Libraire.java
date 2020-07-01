@@ -1,34 +1,30 @@
 package models;
 
-public class Libraire {
+public class Libraire extends Utilisateur {
 
-	private String nom;
-	private String prenom;
+	private Compte monCompte;
 	private int id;
 	private final String role = " libraire";
+
+	public Libraire(int pId, String pPrenom, String pNom, Compte pMonCompte) {
+		super(pId, pPrenom, pNom);
+		this.monCompte = pMonCompte;
+	}
 
 	public Libraire() {
 
 	}
 
-	public Libraire(int id, String Nom, String Prenom) {
-
+	public Libraire(int pId, String pNom, String pPrenom) {
+		super(pId, pPrenom, pNom);
 	}
 
-	public String getNom() {
-		return nom;
+	public Compte getMonCompte() {
+		return monCompte;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setMonCompte(Compte monCompte) {
+		this.monCompte = monCompte;
 	}
 
 	public int getId() {
@@ -39,13 +35,13 @@ public class Libraire {
 		this.id = id;
 	}
 
-	@Override
-	public String toString() {
-		return "Libraire [nom=" + nom + ", prenom=" + prenom + ", id=" + id + "]";
-	}
-
 	public String getRole() {
 		return role;
+	}
+
+	@Override
+	public String toString() {
+		return "Libraire [id=" + id + ", role=" + role + ", Prenom()=" + getPrenom() + ", Nom =" + getNom() + "]";
 	}
 
 }

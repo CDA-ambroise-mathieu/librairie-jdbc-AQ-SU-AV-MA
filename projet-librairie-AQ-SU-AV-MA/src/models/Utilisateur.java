@@ -17,17 +17,21 @@ public class Utilisateur {
 		this.prenom = pPrenom;
 		this.nom = pNom;
 	}
+
 	public Utilisateur(boolean pInscrit, String pPrenom, String pNom) {
 		super();
 		this.inscrit = pInscrit;
 		this.prenom = pPrenom;
 		this.nom = pNom;
 	}
-	public Utilisateur(String pPrenom, String pNom) {
+
+	public Utilisateur(int pId, String pPrenom, String pNom) {
 		super();
+		this.id = pId;
 		this.prenom = pPrenom;
 		this.nom = pNom;
 	}
+
 	public Utilisateur() {
 		super();
 	}
