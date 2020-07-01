@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AffichageConsole {
@@ -24,7 +23,7 @@ public class AffichageConsole {
 				System.out.println("(1) Comptes Clients");
 				System.out.println("(2) Commandes");
 				System.out.println("(3) Livres");
-				System.out.println("(4) Déconnexion");
+				System.out.println("(4) Dï¿½connexion");
 				System.out.println("(5) Quitter");
 				System.out.print("Choix : ");
 				if (scanner.hasNextInt()) {
@@ -41,7 +40,7 @@ public class AffichageConsole {
 			case "client":
 				System.out.println("(1) Mes Commandes");
 				System.out.println("(2) Lister Livre");
-				System.out.println("(3) Déconnexion");
+				System.out.println("(3) Dï¿½connexion");
 				System.out.println("(4) Quitter");
 				System.out.print("Choix : ");
 				if (scanner.hasNextInt()) {
@@ -59,7 +58,7 @@ public class AffichageConsole {
 				System.out.println("(1) Connexion");
 				System.out.println("(2) Inscription");
 				System.out.println("(3) Lister les livres");
-				System.out.println("(4) Déconnexion");
+				System.out.println("(4) Dï¿½connexion");
 				System.out.println("(5) Quitter");
 
 				System.out.print("Choix : ");
@@ -78,13 +77,13 @@ public class AffichageConsole {
 		}
 	}
 
-	/* Possible supression une fois les classes ajoutées */
+	/* Possible supression une fois les classes ajoutï¿½es */
 	/* A modifier par les appelles aux DAO Utilisateur/Libraire/Client */
-	
+
 	/*************/
 	/* UTILISATEUR */
 	/*************/
-	
+
 	private void choixMenuUtilisateur(int choix) {
 		switch (choix) {
 		case 1: // Connexion
@@ -96,7 +95,7 @@ public class AffichageConsole {
 		case 3: // Lister les livres
 			listerLivres();
 			break;
-		case 4: // Déconnexion
+		case 4: // Dï¿½connexion
 			deconnexion();
 			break;
 		case 5: // Quitter
@@ -114,7 +113,7 @@ public class AffichageConsole {
 	}
 
 	public void inscription() {
-		System.out.println("*** Quel rôle voulez vous ? ***");
+		System.out.println("*** Quel rï¿½le voulez vous ? ***");
 		System.out.println("(1) Client");
 		System.out.println("(2) Libraire");
 		System.out.println("(3) Retour");
@@ -139,16 +138,16 @@ public class AffichageConsole {
 			System.out.println("Veuillez n'entrer que des chiffres !");
 			inscription();
 		}
-		System.out.println("*** Vous êtes maintenant connecté en temps que "+this.testRole+".");
+		System.out.println("*** Vous ï¿½tes maintenant connectï¿½ en temps que " + this.testRole + ".");
 	}
 
 	public void deconnexion() {
 		if (!this.testRole.equals("invite")) {
 			this.testRole = "invite";
 		} else {
-			System.out.println("Vous êtes déjà déconnecté !");
+			System.out.println("Vous ï¿½tes dï¿½jï¿½ dï¿½connectï¿½ !");
 		}
-		System.out.println("*** Vous êtes maintenant connecté en temps que "+this.testRole+".");
+		System.out.println("*** Vous ï¿½tes maintenant connectï¿½ en temps que " + this.testRole + ".");
 	}
 
 	public void quitter() {
@@ -159,30 +158,29 @@ public class AffichageConsole {
 
 	public void listerLivres() {
 		System.out.println("*** Liste des livres actuel ***");
-		System.out.println("- Ghost in Love par Marc Lévy");
-		System.out.println("- Au soleil redouté par Michel Bussi");
+		System.out.println("- Ghost in Love par Marc Lï¿½vy");
+		System.out.println("- Au soleil redoutï¿½ par Michel Bussi");
 		System.out.println("- Miroir de nos peines par Pierre Lemaitre");
 		System.out.println("- Le Signal par Maxime Chattam");
-		System.out.println("- Changer l'eau des fleurs par Valérie Perrin");
-		System.out.println("- Le lambeau par Philippe Lançon");
-		System.out.println("- Je te promets la liberté par Laurent Gounelle");
+		System.out.println("- Changer l'eau des fleurs par Valï¿½rie Perrin");
+		System.out.println("- Le lambeau par Philippe Lanï¿½on");
+		System.out.println("- Je te promets la libertï¿½ par Laurent Gounelle");
 		System.out.println("- Ce que savait la nuit par Arnaldur Indridason");
 		System.out.println("- A la recherche d'Alice Love");
 		System.out.println("- Le Consentement par Vanessa Springora");
 	}
 
-	
 	/*************/
 	/* LIBRAIRE */
 	/*************/
-	
+
 	public void choixMenuLibraire(int pChoixML) {
 		switch (pChoixML) {
 		case 1: // Client
 			System.out.println("*** Client ***");
-			System.out.println("(1) Valider création compte");
-			System.out.println("(2) Refuser création compte");
-			System.out.println("(3) Désactiver compte");
+			System.out.println("(1) Valider crï¿½ation compte");
+			System.out.println("(2) Refuser crï¿½ation compte");
+			System.out.println("(3) Dï¿½sactiver compte");
 			System.out.println("(4) Retour");
 			System.out.print("Choix : ");
 
@@ -237,25 +235,25 @@ public class AffichageConsole {
 	}
 
 	public void choixSousMenuLibraire(int pChoixML, int pChoixSML) {
-		switch(pChoixML) {
+		switch (pChoixML) {
 		case 1: // Client
-			switch(pChoixSML) {
+			switch (pChoixSML) {
 			case 1: // Valider Compte
 				System.out.println("VALIDATION DE COMPTE");
 				break;
-				
+
 			case 2: // Refuser Compte
 				System.out.println("REFUS DE COMPTE");
 				break;
-				
-			case 3: // Désactiver Compte
+
+			case 3: // Dï¿½sactiver Compte
 				System.out.println("DESACTION DE COMPTE");
 				break;
-				
+
 			case 4: // Lister livre
 				listerLivres();
 				break;
-			
+
 			case 5: // Annuler
 				break;
 			default:
@@ -263,12 +261,12 @@ public class AffichageConsole {
 				break;
 			}
 			break;
-		case 2:	// Commande
-			switch(pChoixSML) {
+		case 2: // Commande
+			switch (pChoixSML) {
 			case 1: // Lister Commandes
 				System.out.println("LISTAGE DES COMMANDES");
 				break;
-			case 2: // Changer état commande
+			case 2: // Changer ï¿½tat commande
 				System.out.println("CHEANGAGE DES COMMANDES");
 				break;
 			case 3: // Annuler
@@ -278,52 +276,51 @@ public class AffichageConsole {
 				break;
 			}
 			break;
-		case 3: //  Livre
-			switch(pChoixSML) {
+		case 3: // Livre
+			switch (pChoixSML) {
 			case 1: // Ajouter livre
 				System.out.println("AJOUT D'UN LIVRE ");
 				break;
 			case 2: // Supprimer livre
 				System.out.println("SUPPRESSION D'UN LIVRE ");
 				break;
-			case 3: // Modifier quantité livre
+			case 3: // Modifier quantitï¿½ livre
 				System.out.println("MODIFICATION D'UN LIVRE ");
 				break;
 			case 4: // Annuler
 				break;
 			default:
 				System.out.println("Ce n'est pas un bon choix !");
-				break; 
+				break;
 			}
 			break;
 		default:
 			System.out.println("Ce n'est pas un bon choix !");
 			break;
-		}		
+		}
 	}
-	
-	
+
 	/*************/
-	/*  CLIENT   */
+	/* CLIENT */
 	/*************/
-	
+
 	public void choixMenuClient(int choix) {
-		switch(choix) {
+		switch (choix) {
 		case 1: // Mes Commandes
 			System.out.println("LISTING DES COMMANDES");
 			break;
 		case 2: // Lister livres
 			listerLivres();
 			break;
-		case 3: // Déconnexion
+		case 3: // Dï¿½connexion
 			deconnexion();
 			break;
-		case 4: //Quitter
+		case 4: // Quitter
 			quitter();
 			break;
 		default:
 			System.out.println("Ce n'est pas un bon choix !");
 			break;
 		}
-	}	
+	}
 }
