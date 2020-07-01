@@ -1,39 +1,16 @@
 package view;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class AffichageConsole {
 	private String testRole = "invite";
 	private boolean continuer = true;
 	private Scanner scanner;
-	private ArrayList<String> listeClientAttente;
-	private ArrayList<String> listeClient;
-	private ArrayList<String> listeClientMasque;
-	private Map<String,String> listeCommande;
-	
+
 	public void init() {
 		if (scanner == null) {
 			scanner = new Scanner(System.in);
-			listeClientAttente = new ArrayList<>();
-			listeClient = new ArrayList<>();
-			listeClientMasque = new ArrayList<>();
-			listeCommande = new HashMap<>();
-			
-			listeClientAttente.add("Selexia");
-			listeClientAttente.add("Saecla");
-			listeClientAttente.add("Burzhuan");
-			listeClientAttente.add("Finrodd");
-			
-			listeClient.add("Romsh");
-			
-			listeCommande.put("Ghost in Love par Marc Lévy", "preparation");
-			listeCommande.put("Au soleil redouté par Michel Bussi", "attente");
-			listeCommande.put("Le Signal par Maxime Chattam", "attente");
-			
-			
 		}
 		System.out.println("********  Bonjour " + testRole + "  ********");
 		this.menuPrincipal();
@@ -49,7 +26,7 @@ public class AffichageConsole {
 				System.out.println("(3) Livres");
 				System.out.println("(4) Déconnexion");
 				System.out.println("(5) Quitter");
-
+				System.out.print("Choix : ");
 				if (scanner.hasNextInt()) {
 					int choix = scanner.nextInt();
 					scanner.nextLine();
@@ -62,6 +39,20 @@ public class AffichageConsole {
 
 				break;
 			case "client":
+				System.out.println("(1) Mes Commandes");
+				System.out.println("(2) Lister Livre");
+				System.out.println("(3) Déconnexion");
+				System.out.println("(4) Quitter");
+				System.out.print("Choix : ");
+				if (scanner.hasNextInt()) {
+					int choix = scanner.nextInt();
+					scanner.nextLine();
+					System.out.println();
+					choixMenuClient(choix);
+				} else {
+					System.out.println("Veuillez n'entrer que des chiffres !");
+					menuPrincipal();
+				}
 				break;
 
 			default:
@@ -70,7 +61,6 @@ public class AffichageConsole {
 				System.out.println("(3) Lister les livres");
 				System.out.println("(4) Déconnexion");
 				System.out.println("(5) Quitter");
-
 
 				System.out.print("Choix : ");
 				if (scanner.hasNextInt()) {
@@ -90,8 +80,11 @@ public class AffichageConsole {
 
 	/* Possible supression une fois les classes ajoutées */
 	/* A modifier par les appelles aux DAO Utilisateur/Libraire/Client */
-
+	
+	/*************/
 	/* UTILISATEUR */
+	/*************/
+	
 	private void choixMenuUtilisateur(int choix) {
 		switch (choix) {
 		case 1: // Connexion
@@ -117,14 +110,15 @@ public class AffichageConsole {
 
 	public void connexion() {
 		this.testRole = "libraire";
-		System.out.println("********  Bonjour "+this.testRole+"  ********");
+		System.out.println("********  Bonjour " + this.testRole + "  ********");
 	}
 
 	public void inscription() {
 		System.out.println("*** Quel rôle voulez vous ? ***");
 		System.out.println("(1) Client");
 		System.out.println("(2) Libraire");
-		System.out.println("(3) Annuler");
+		System.out.println("(3) Retour");
+		System.out.print("Choix : ");
 		if (scanner.hasNextInt()) {
 			int choix = scanner.nextInt();
 			scanner.nextLine();
@@ -145,14 +139,16 @@ public class AffichageConsole {
 			System.out.println("Veuillez n'entrer que des chiffres !");
 			inscription();
 		}
+		System.out.println("*** Vous êtes maintenant connecté en temps que "+this.testRole+".");
 	}
 
 	public void deconnexion() {
-		if(!this.testRole.equals("invite")) {
+		if (!this.testRole.equals("invite")) {
 			this.testRole = "invite";
-		}else {
+		} else {
 			System.out.println("Vous êtes déjà déconnecté !");
 		}
+		System.out.println("*** Vous êtes maintenant connecté en temps que "+this.testRole+".");
 	}
 
 	public void quitter() {
@@ -176,9 +172,10 @@ public class AffichageConsole {
 	}
 
 	
-	
+	/*************/
 	/* LIBRAIRE */
-
+	/*************/
+	
 	public void choixMenuLibraire(int pChoixML) {
 		switch (pChoixML) {
 		case 1: // Client
@@ -186,13 +183,14 @@ public class AffichageConsole {
 			System.out.println("(1) Valider création compte");
 			System.out.println("(2) Refuser création compte");
 			System.out.println("(3) Désactiver compte");
-			System.out.println("(4) Annuler");
-			
-			if(scanner.hasNextInt()) {
+			System.out.println("(4) Retour");
+			System.out.print("Choix : ");
+
+			if (scanner.hasNextInt()) {
 				int pChoixSML = scanner.nextInt();
 				scanner.nextLine();
 				this.choixSousMenuLibraire(pChoixML, pChoixSML);
-			}else {
+			} else {
 				System.out.println("Veuillez n'entrer que des chiffres !");
 			}
 			break;
@@ -200,12 +198,13 @@ public class AffichageConsole {
 			System.out.println("*** Commande ***");
 			System.out.println("(1) Lister les commandes");
 			System.out.println("(2) Modifier statut commande");
-			System.out.println("(3) Annuler");
-			if(scanner.hasNextInt()) {
+			System.out.println("(3) Retour");
+			System.out.print("Choix : ");
+			if (scanner.hasNextInt()) {
 				int pChoixSML = scanner.nextInt();
 				scanner.nextLine();
 				this.choixSousMenuLibraire(pChoixML, pChoixSML);
-			}else {
+			} else {
 				System.out.println("Veuillez n'entrer que des chiffres !");
 			}
 			break;
@@ -214,21 +213,21 @@ public class AffichageConsole {
 			System.out.println("(1) Ajouter livre");
 			System.out.println("(2) Supprimer livre");
 			System.out.println("(3) Modifier stock d'un livre");
-			System.out.println("(4) Annuler");
-			if(scanner.hasNextInt()) {
+			System.out.println("(4) Lister les livres");
+			System.out.println("(5) Retour");
+			System.out.print("Choix : ");
+			if (scanner.hasNextInt()) {
 				int pChoixSML = scanner.nextInt();
 				scanner.nextLine();
 				this.choixSousMenuLibraire(pChoixML, pChoixSML);
-			}else {
+			} else {
 				System.out.println("Veuillez n'entrer que des chiffres !");
 			}
 			break;
 		case 4:
-			break;
-		case 5:
 			deconnexion();
 			break;
-		case 6: 
+		case 5:
 			quitter();
 			break;
 		default:
@@ -236,61 +235,95 @@ public class AffichageConsole {
 			break;
 		}
 	}
-	
+
 	public void choixSousMenuLibraire(int pChoixML, int pChoixSML) {
 		switch(pChoixML) {
 		case 1: // Client
 			switch(pChoixSML) {
 			case 1: // Valider Compte
-				listeClientAttente.stream().forEach(x->System.out.println(listeClientAttente.indexOf(x)+" "+x));
-				if(scanner.hasNextInt()) {
-					int choix = scanner.nextInt();
-					scanner.nextLine();
-					listeClient.add(listeClientAttente.get(choix));
-					listeClientAttente.remove(choix);
-				}
+				System.out.println("VALIDATION DE COMPTE");
 				break;
 				
 			case 2: // Refuser Compte
-				listeClientAttente.stream().forEach(x->System.out.println(listeClientAttente.indexOf(x)+" "+x));
-				if(scanner.hasNextInt()) {
-					int choix = scanner.nextInt();
-					scanner.nextLine();
-					listeClientAttente.remove(choix);
-				}
+				System.out.println("REFUS DE COMPTE");
 				break;
 				
 			case 3: // Désactiver Compte
-				listeClient.stream().forEach(x->System.out.println(listeClient.indexOf(x)+" "+x));
-				if(scanner.hasNextInt()) {
-					int choix = scanner.nextInt();
-					scanner.nextLine();
-					listeClientMasque.add(listeClient.get(choix));
-					listeClient.remove(choix);
-				}
+				System.out.println("DESACTION DE COMPTE");
 				break;
 				
-			case 4: // Annuler
+			case 4: // Lister livre
+				listerLivres();
 				break;
-				
+			
+			case 5: // Annuler
+				break;
 			default:
 				System.out.println("Ce n'est pas un bon choix !");
 				break;
 			}
-			
 			break;
 		case 2:	// Commande
 			switch(pChoixSML) {
-			
+			case 1: // Lister Commandes
+				System.out.println("LISTAGE DES COMMANDES");
+				break;
+			case 2: // Changer état commande
+				System.out.println("CHEANGAGE DES COMMANDES");
+				break;
+			case 3: // Annuler
+				break;
+			default:
+				System.out.println("Ce n'est pas un bon choix !");
+				break;
 			}
 			break;
 		case 3: //  Livre
 			switch(pChoixSML) {
-			
+			case 1: // Ajouter livre
+				System.out.println("AJOUT D'UN LIVRE ");
+				break;
+			case 2: // Supprimer livre
+				System.out.println("SUPPRESSION D'UN LIVRE ");
+				break;
+			case 3: // Modifier quantité livre
+				System.out.println("MODIFICATION D'UN LIVRE ");
+				break;
+			case 4: // Annuler
+				break;
+			default:
+				System.out.println("Ce n'est pas un bon choix !");
+				break; 
 			}
 			break;
 		default:
+			System.out.println("Ce n'est pas un bon choix !");
 			break;
 		}		
 	}
+	
+	
+	/*************/
+	/*  CLIENT   */
+	/*************/
+	
+	public void choixMenuClient(int choix) {
+		switch(choix) {
+		case 1: // Mes Commandes
+			System.out.println("LISTING DES COMMANDES");
+			break;
+		case 2: // Lister livres
+			listerLivres();
+			break;
+		case 3: // Déconnexion
+			deconnexion();
+			break;
+		case 4: //Quitter
+			quitter();
+			break;
+		default:
+			System.out.println("Ce n'est pas un bon choix !");
+			break;
+		}
+	}	
 }
