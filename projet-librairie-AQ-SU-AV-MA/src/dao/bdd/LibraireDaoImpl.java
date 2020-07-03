@@ -18,12 +18,11 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement(
-						"insert into utilisateur (nom, prenom, role, num_compte, login, password) values (?,?,?,?,?,?); ",
+						"insert into utilisateur (nom, prenom, role, login, password) values (?,?,?,?,?,?); ",
 						PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, pLibraire.getNom());
 				ps.setString(2, pLibraire.getPrenom());
 				ps.setString(3, pLibraire.getRole());
-				ps.setInt(4, pLibraire.getNum_compte());
 				ps.setString(5, pLibraire.getLogin());
 				ps.setString(6, pLibraire.getPassword());
 				ps.executeUpdate();
@@ -126,7 +125,6 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 					String nom = retour.getString("nom");
 					String prenom = retour.getString("prenom");
 					String role = retour.getString("role");
-					int num = retour.getInt("num_compte");
 					String log = retour.getString(" login");
 					String password = retour.getNString("password");
 
@@ -135,7 +133,6 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 					l1.setNom(nom);
 					l1.setPrenom(prenom);
 					l1.setRole(role);
-					l1.setNum_compte(num);
 					l1.setLogin(log);
 					l1.setPassword(password);
 
@@ -148,7 +145,6 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 		return listeRetour;
 	}
 
-	@Override
 	public Libraire findByLogin(String pLogin) {
 		Libraire libraire = null;
 		Connection c = MyConnection.getConnection();
