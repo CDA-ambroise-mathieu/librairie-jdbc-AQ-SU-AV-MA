@@ -27,7 +27,9 @@ CREATE TABLE Utilisateur(
         role           Varchar (50) NOT NULL ,
         num_compte     Int NOT NULL ,
         login          Varchar (50) NOT NULL ,
-        password       Varchar (200) NOT NULL
+        password       Varchar (200) NOT null,
+        inscrit        Boolean not null,
+        masque         Boolean not null
 	,CONSTRAINT Utilisateur_PK PRIMARY KEY (id_utilisateur)
 )ENGINE=InnoDB;
 
