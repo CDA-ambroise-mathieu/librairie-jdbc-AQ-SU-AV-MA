@@ -8,47 +8,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.Dao;
-import models.Libraire;
+import lombok.Data;
+import models.Utilisateur;
 
-public class LibraireDaoImpl implements Dao<Libraire> {
+@Data
+public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 
-	private static Libraire l1 = new Libraire();
+	private static Utilisateur u1 = new Utilisateur();
+
+	protected Connection connect = null;
+
+//	public DAO(Connection conn) { // il faut la connexion avec la BDD créée pour que 
+//	ça fonctionne non ?
+//		this.connect = conn;
+//	}
 
 	@Override
-	public Libraire save(Libraire pLibraire) {
+	public Utilisateur save(Utilisateur pUtilisateur) {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement(
-						"insert into utilisateur (nom,prenom,numeroCompte,login,motDePasse,role) values (?,?,?,?,?,?); ",
+				// ******* Penser à vérifer s'il faut ajouter le role par défaut! *****
+				// ******* Ajouter login et mdp!
+				PreparedStatement ps = c.prepareStatement("insert into utilisateur (nom, prenom) values (?,?);",
 						PreparedStatement.RETURN_GENERATED_KEYS);
-				ps.setString(1, pLibraire.getNom());
-				ps.setString(2, pLibraire.getPrenom());
-				ps.setString(3, pLibraire.getMonCompte().getNumeroCompte());
-				ps.setString(4, pLibraire.getMonCompte().getLogin());
-				ps.setString(5, pLibraire.getMonCompte().getMotDePasse());
-				ps.setString(6, pLibraire.getRole());
+				ps.setString(1, pUtilisateur.getNom());
+				ps.setString(2, pUtilisateur.getPrenom());
 				ps.executeUpdate();
 				ResultSet resultat = ps.getGeneratedKeys();
 				if (resultat.next()) {
-					pLibraire.setId(resultat.getInt(1));
-					return pLibraire;
+					pUtilisateur.setId(resultat.getInt(1));
+					return pUtilisateur;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		}
 		return null;
 	}
 
 	@Override
-	public void remove(Libraire pLibraire) {
-
+	public void remove(Utilisateur pUtilisateur) {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement("DELETE from utilisateur \r\n" + "WHERE id=?");
-				ps.setInt(1, pLibraire.getId());
+				ps.setInt(1, pUtilisateur.getId());
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -57,16 +62,17 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 	}
 
 	@Override
-	public Libraire update(Libraire pLibraire) {
-
+	public Utilisateur update(Utilisateur pUtilisateur) {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
+
+				// ajouter login et mdp
 				PreparedStatement ps = c
 						.prepareStatement("UPDATE utilisateur \r\n" + "SET nom= ? , prenom =?\r\n" + "WHERE id=?");
-				ps.setString(1, pLibraire.getNom());
-				ps.setString(1, pLibraire.getPrenom());
-				ps.setInt(3, pLibraire.getId());
+				ps.setString(1, pUtilisateur.getNom());
+				ps.setString(1, pUtilisateur.getPrenom());
+				ps.setInt(3, pUtilisateur.getId());
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -76,29 +82,31 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 	}
 
 	@Override
-	public Libraire findById(int id) {
-		Libraire libraire = null;
+	public Utilisateur findById(int pIdentifiant) {
+		Utilisateur pUtilisateur = null;
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("select * from utilisateur where id = ?; ");
-				ps.setInt(1, id);
+				PreparedStatement ps = c.prepareStatement("select * from utilisateur where num = ?;");
+				ps.setInt(1, pIdentifiant);
 				ResultSet r = ps.executeQuery();
 				if (r.next())
-					libraire = new Libraire(r.getInt("id"), r.getString("nom"), r.getString("prenom"));
+					pUtilisateur = new Utilisateur(r.getInt("identifiant"), r.getBoolean("inscrit"),
+							r.getString("prenom"), r.getString("nom"));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return libraire;
+		return pUtilisateur;
 	}
 
 	@Override
-	public List<Libraire> getAll() {
+	public List<Utilisateur> getAll() {
 
-		String request = "SELECT * from utilisateur where role = libraire;";
+		// Penser à ajouter login et mdp.
+		String request = "SELECT * from utilisateur;";
 		PreparedStatement ps;
-		ArrayList<Libraire> listeRetour = new ArrayList<>();
+		ArrayList<Utilisateur> listeRetour = new ArrayList<>();
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
@@ -111,10 +119,10 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 					String nom = retour.getString("nom");
 					String prenom = retour.getString("prenom");
 
-					l1.setId(id);
-					l1.setNom(nom);
-					l1.setPrenom(prenom);
-					listeRetour.add(l1);
+					u1.setId(id);
+					u1.setNom(nom);
+					u1.setPrenom(prenom);
+					listeRetour.add(u1);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
