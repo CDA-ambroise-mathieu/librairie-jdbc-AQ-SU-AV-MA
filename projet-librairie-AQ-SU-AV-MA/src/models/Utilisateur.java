@@ -41,6 +41,7 @@ public class Utilisateur {
 		super();
 	}
 
+
 	public int getId_utilisateur() {
 		return id_utilisateur;
 	}
@@ -63,6 +64,44 @@ public class Utilisateur {
 
 	public void setNom(String pNom) {
 		this.nom = pNom;
+	}
+
+	public Utilisateur(int pId_utilisateur, String pPrenom, String pNom, String pRole, int pNum_compte, String pLogin,
+			String pPassword, boolean pInscrit) {
+		super();
+		this.id_utilisateur = pId_utilisateur;
+		this.prenom = pPrenom;
+		this.nom = pNom;
+		this.role = pRole;
+		this.num_compte = pNum_compte;
+		this.login = pLogin;
+		this.password = pPassword;
+		this.inscrit = pInscrit;
+	}
+
+	public Utilisateur(int pId_utilisateur, String pPrenom, String pNom, String pRole, int pNum_compte, String pLogin,
+			String pPassword) { // constructeur pour findById
+		super();
+		this.id_utilisateur = pId_utilisateur;
+		this.prenom = pPrenom;
+		this.nom = pNom;
+		this.role = pRole;
+		this.num_compte = pNum_compte;
+		this.login = pLogin;
+		this.password = pPassword;
+	}
+	
+
+	public Utilisateur(String pLogin, String pPrenom, String pNom, String pRole, int pNum_compte,int pId_utilisateur,
+			String pPassword) { // constructeur pour findByLogin
+		super();
+		this.id_utilisateur = pId_utilisateur;
+		this.prenom = pPrenom;
+		this.nom = pNom;
+		this.role = pRole;
+		this.num_compte = pNum_compte;
+		this.login = pLogin;
+		this.password = pPassword;
 	}
 
 }

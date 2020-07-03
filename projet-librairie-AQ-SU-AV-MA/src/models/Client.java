@@ -21,14 +21,12 @@ public class Client extends Utilisateur {
 		super(pPrenom, pNom);
 		// TODO Auto-generated constructor stub
 	}
-//extends Utilisateur à ajouter ATTENTION
-// Attributs de la classe Utilisateur à ajouter
 
-	@Override
-	public String toString() {
-		return "Client [getId_utilisateur()=" + getId_utilisateur() + ", getPrenom()=" + getPrenom() + ", getNom()="
-				+ getNom() + ", getRole()=" + getRole() + ", getNum_compte()=" + getNum_compte() + ", toString()="
-				+ super.toString() + "]";
+	public Client(int id_utilisateur , String pPrenom, String pNom, String pRole, int pNum_compte, String pLogin, String pPassword) {
+		super(pPrenom, pNom, pRole, pNum_compte, pLogin, pPassword);
+		// TODO Auto-generated constructor stub
 	}
+	
+	
 
 }

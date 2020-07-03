@@ -2,6 +2,8 @@ package dao;
 
 import java.util.List;
 
+import models.Utilisateur;
+
 public interface Dao<T> {
 
 	T save(T obj);
@@ -13,4 +15,6 @@ public interface Dao<T> {
 	T findById(int id);
 
 	List<T> getAll();
+
+	Utilisateur findByLogin(String pLogin);
 }
