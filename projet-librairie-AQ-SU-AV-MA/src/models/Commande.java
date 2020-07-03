@@ -11,9 +11,8 @@ public class Commande {
 	private String dateCommande;
 	private int nombreArticles;
 	private List<Livre> designationArticles;
-	private boolean annulee = false;
-	private boolean enCoursLivraison = false;
-	private boolean livree = false;
+	private int etat; // ce nombre doit être compris entre 1et 5 en fonction de l'avancement de la
+						// commande.
 
 	public Commande() {
 
@@ -23,19 +22,15 @@ public class Commande {
 		this.designationArticles = pDesignationArticles;
 	}
 
-	public Commande(int pId, String pDateCommande, int pNombreArticles, boolean pLivree) {
+	public Commande(int pId, String pDateCommande, int pNombreArticles, int pEtat) {
 		this.id = pId;
 		this.dateCommande = pDateCommande;
 		this.nombreArticles = pNombreArticles;
-		this.livree = pLivree;
-	}
-
-	public Commande(int pId, String pDateCommande, int pNombreArticles, boolean pLivree, boolean pAnnulee) {
-		this.id = pId;
-		this.dateCommande = pDateCommande;
-		this.nombreArticles = pNombreArticles;
-		this.livree = pLivree;
-		this.annulee = pAnnulee;
+		if (pEtat > 0 && pEtat < 6) {
+			this.etat = pEtat;
+		} else {
+			System.out.println("Saisissez un chiffre entre 1 et 5 compris.");
+		}
 	}
 
 }

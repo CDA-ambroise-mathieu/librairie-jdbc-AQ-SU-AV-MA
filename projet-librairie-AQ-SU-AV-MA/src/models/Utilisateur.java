@@ -12,12 +12,22 @@ public class Utilisateur {
 	private int num_compte;
 	private String login;
 	private String password;
-	
+
 	public Utilisateur(int pId_utilisateur, String pPrenom, String pNom) {
 		super();
+
 		this.id_utilisateur = pId_utilisateur;
 		this.prenom = pPrenom;
 		this.nom = pNom;
+	}
+
+	public Utilisateur(String pPrenom, String pNom, String pRole, int pNum_compte, String pLogin, String pPassword) {
+		this.prenom = pPrenom;
+		this.nom = pNom;
+		this.role = pRole;
+		this.num_compte = pNum_compte;
+		this.login = pLogin;
+		this.password = pPassword;
 	}
 
 	public Utilisateur(String pPrenom, String pNom) {
@@ -29,13 +39,15 @@ public class Utilisateur {
 	public Utilisateur() {
 		super();
 	}
-	
+
 	public int getId_utilisateur() {
 		return id_utilisateur;
 	}
+
 	public void setId(int pId_utilisateur) {
 		id_utilisateur = pId_utilisateur;
 	}
+
 	public String getPrenom() {
 		return prenom;
 	}

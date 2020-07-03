@@ -1,48 +1,34 @@
 package models;
 
 public class Client extends Utilisateur {
+
+	public Client() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Client(int pId_utilisateur, String pPrenom, String pNom) {
+		super(pId_utilisateur, pPrenom, pNom);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Client(String pPrenom, String pNom, String pRole, int pNum_compte, String pLogin, String pPassword) {
+		super(pPrenom, pNom, pRole, pNum_compte, pLogin, pPassword);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Client(String pPrenom, String pNom) {
+		super(pPrenom, pNom);
+		// TODO Auto-generated constructor stub
+	}
 //extends Utilisateur à ajouter ATTENTION
 // Attributs de la classe Utilisateur à ajouter
 
-	private Compte monCompte;
-	private int id;
-	private final String role = "client";
-
-	public Client(int pId, String pPrenom, String pNom, Compte pMonCompte) {
-		super(pId, pPrenom, pNom);
-		this.monCompte = pMonCompte;
-	}
-
-	public Client(int pId, String pPrenom, String pNom) {
-		super(pId, pPrenom, pNom);
-	}
-
-	public Client() {
-	}
-
-	public Compte getMonCompte() {
-		return monCompte;
-	}
-
-	public void setMonCompte(Compte monCompte) {
-		this.monCompte = monCompte;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
 	@Override
 	public String toString() {
-		return "Client [monCompte=" + monCompte + ", id=" + id + ", role=" + role + "]";
+		return "Client [getId_utilisateur()=" + getId_utilisateur() + ", getPrenom()=" + getPrenom() + ", getNom()="
+				+ getNom() + ", getRole()=" + getRole() + ", getNum_compte()=" + getNum_compte() + ", toString()="
+				+ super.toString() + "]";
 	}
 
 }
