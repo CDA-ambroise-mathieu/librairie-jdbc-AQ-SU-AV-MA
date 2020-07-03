@@ -25,7 +25,6 @@ CREATE TABLE Utilisateur(
         nom            Varchar (50) NOT NULL ,
         prenom         Varchar (50) NOT NULL ,
         role           Varchar (50) NOT NULL ,
-        num_compte     Int NOT NULL ,
         login          Varchar (50) NOT NULL ,
         password       Varchar (200) NOT null,
         inscrit        Boolean not null,
