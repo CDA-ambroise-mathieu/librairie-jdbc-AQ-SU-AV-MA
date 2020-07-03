@@ -60,7 +60,7 @@ CREATE TABLE Commande(
         nb_articles    Int NOT NULL ,
         etat           Int NOT NULL COMMENT "etat --> 1 - 5 correspond a l'etat de la commande"  ,
         id_utilisateur Int NOT NULL ,
-        id_adresse     Int NOT NULL
+        id_adresse     Int NULL
 	,CONSTRAINT Commande_PK PRIMARY KEY (id_commande)
 
 	,CONSTRAINT Commande_Utilisateur_FK FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur)
@@ -91,7 +91,8 @@ CREATE TABLE Livre(
 
 CREATE TABLE Constituer(
         id_commande Int NOT NULL ,
-        id_livre    Int NOT NULL
+        id_livre    Int NOT NULL ,
+        nb_livres   Int NOT NULL
 	,CONSTRAINT Constituer_PK PRIMARY KEY (id_commande,id_livre)
 
 	,CONSTRAINT Constituer_Commande_FK FOREIGN KEY (id_commande) REFERENCES Commande(id_commande)
