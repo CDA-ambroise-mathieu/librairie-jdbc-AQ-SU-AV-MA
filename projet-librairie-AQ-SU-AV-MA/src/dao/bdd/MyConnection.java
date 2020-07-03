@@ -30,17 +30,18 @@ class MyConnection {
 	}
 
 	public static void main(String args[]) {
-
-		LibraireDaoImpl lib = new LibraireDaoImpl();
-		List<Libraire> liste = new ArrayList<>();
-		Libraire toto = new Libraire(4, "Test", "Toto", "libraire", 22, "NobToto", "112SS");
-//		lib.save(toto);
-//		lib.removeById(5);
-		lib.update(toto);
-
-		liste = lib.getAll();
-		for (Libraire libraire : liste) {
-			System.out.println(libraire);
+		String requete = "SELECT * FROM Utilisateur;";
+		try {
+			Connection co = MyConnection.getConnection();
+			PreparedStatement statement = co.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
+			ResultSet result = statement.executeQuery();
+			while(result.next()) {
+				int str = result.getInt("id_utilisateur");
+				System.out.println("Ca marche "+str);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}

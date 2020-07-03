@@ -197,8 +197,21 @@ public class ClientDaoImpl implements ClientDao {
 
 	@Override
 	public Utilisateur findByLogin(String pLogin) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE login = ?;");
+				ps.setString(1, pLogin);
+				ResultSet r = ps.executeQuery();
+				if (r.next()) {
+					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
+							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return client;
 	}
 
 }
