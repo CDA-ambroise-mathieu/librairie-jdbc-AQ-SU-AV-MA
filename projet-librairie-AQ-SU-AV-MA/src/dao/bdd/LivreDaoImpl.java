@@ -15,29 +15,29 @@ public class LivreDaoImpl implements LivreDao {
 	List<Livre> listeDesLivres = new ArrayList<>();
 
 	@Override
-	public Livre save(Livre obj) {
+	public Livre save(Livre pLivre) {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			PreparedStatement ps;
 			try {
 				ps = c.prepareStatement(
-						"INSERT INTO livre (libelle,titre,auteur,edition,anneParution,quantiteStock,prixUnitaire) values (?,?,?,?,?,?,?); ",
+						"INSERT INTO livre (libelle,titre,auteur,edition,annee_parution,qte_stock,prix_unitaire) values (?,?,?,?,?,?,?); ",
 						PreparedStatement.RETURN_GENERATED_KEYS);
 
-				ps.setString(1, livre.getLibelle());
-				ps.setString(2, livre.getTitre());
-				ps.setString(3, livre.getAuteur());
-				ps.setString(4, livre.getEdition());
-				ps.setInt(5, livre.getAnneeParution());
-				ps.setInt(6, livre.getQuantiteEnStock());
-				ps.setDouble(7, livre.getPrixUnitaire());
+				ps.setString(1, pLivre.getLibelle());
+				ps.setString(2, pLivre.getTitre());
+				ps.setString(3, pLivre.getAuteur());
+				ps.setString(4, pLivre.getEdition());
+				ps.setInt(5, pLivre.getAnneeParution());
+				ps.setInt(6, pLivre.getQuantiteEnStock());
+				ps.setDouble(7, pLivre.getPrixUnitaire());
 				ps.executeUpdate();
 
 				ResultSet resultat = ps.getGeneratedKeys();
 				if (resultat.next()) {
-					livre.setId(resultat.getInt(1));
-					listeDesLivres.add(livre);
-					return livre;
+					pLivre.setId(resultat.getInt(1));
+					listeDesLivres.add(pLivre);
+					return pLivre;
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -47,12 +47,12 @@ public class LivreDaoImpl implements LivreDao {
 	}
 
 	@Override
-	public void remove(Livre obj) {
+	public void remove(Livre pLivre) {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("DELETE FROM livre WHERE id = ?;");
-				ps.setInt(1, livre.getId());
+				PreparedStatement ps = c.prepareStatement("DELETE FROM livre WHERE id_livre = ?;");
+				ps.setInt(1, pLivre.getId());
 				int nbr = ps.executeUpdate();
 				listeDesLivres.remove(livre);
 				if (0 != nbr) {
@@ -77,13 +77,13 @@ public class LivreDaoImpl implements LivreDao {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE id = ?;");
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE id_livre = ?;");
 				ps.setInt(1, id);
 				ResultSet r = ps.executeQuery();
 				if (r.next()) {
-					livre = new Livre(r.getInt("id"), r.getString("libelle"), r.getString("titre"),
-							r.getString("auteur"), r.getString("edition"), r.getInt("anneeParution"),
-							r.getInt("quantiteEnStock"), r.getDouble("prixUnitaire"));
+					livre = new Livre(r.getInt("id_livre"), r.getString("libelle"), r.getString("titre"),
+							r.getString("auteur"), r.getString("edition"), r.getInt("annee_parution"),
+							r.getInt("qte_stock"), r.getDouble("prix_unitaire"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -93,22 +93,22 @@ public class LivreDaoImpl implements LivreDao {
 	}
 
 	@Override
-	public Livre findByLibelle(String id) {
-		Connection c = MyConnection.getConnection();
-		if (c != null) {
-			try {
-				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE libelle = ?;");
-				ps.setString(1, livre.getLibelle());
-				ResultSet r = ps.executeQuery();
-				if (r.next()) {
-					livre = new Livre(r.getInt("id"), r.getString("libelle"), r.getString("titre"),
-							r.getString("auteur"), r.getString("edition"), r.getInt("anneeParution"),
-							r.getInt("quantiteEnStock"), r.getDouble("prixUnitaire"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+	public Livre findByLibelle(String pLibelle) {
+//		Connection c = MyConnection.getConnection();
+//		if (c != null) {
+//			try {
+//				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE libelle = ?;");
+//				ps.setString(1, livre.getLibelle());
+//				ResultSet r = ps.executeQuery();
+//				if (r.next()) {
+//					livre = new Livre(r.getInt("id"), r.getString("libelle"), r.getString("titre"),
+//							r.getString("auteur"), r.getString("edition"), r.getInt("anneeParution"),
+//							r.getInt("quantiteEnStock"), r.getDouble("prixUnitaire"));
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return livre;
 	}
 
@@ -119,7 +119,7 @@ public class LivreDaoImpl implements LivreDao {
 		PreparedStatement ps;
 
 		try {
-			ps = c.prepareStatement("SELECT * FROM livre");
+			ps = c.prepareStatement("SELECT * FROM livre;");
 			ResultSet vResultatSelect = ps.executeQuery();
 
 			int vId;

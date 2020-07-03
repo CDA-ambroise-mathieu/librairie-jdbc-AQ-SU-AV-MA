@@ -76,6 +76,7 @@ CREATE TABLE Commande(
 CREATE TABLE Livre(
         id_livre       Int  Auto_increment  NOT NULL ,
         libelle        Varchar (50) NOT NULL ,
+        titre          Varchar (50) NOT NULL ,
         auteur         Varchar (50) NOT NULL ,
         edition        Varchar (50) NOT NULL ,
         annee_parution Int NOT NULL ,
@@ -111,4 +112,3 @@ CREATE TABLE Habiter(
 	,CONSTRAINT Habiter_Utilisateur_FK FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur)
 	,CONSTRAINT Habiter_Adresse0_FK FOREIGN KEY (id_adresse) REFERENCES Adresse(id_adresse)
 )ENGINE=InnoDB;
-
