@@ -1,12 +1,13 @@
 package dao.bdd;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
+
+import models.Libraire;
 
 class MyConnection {
 	private static Connection connexion = null;
@@ -27,7 +28,7 @@ class MyConnection {
 		}
 		return connexion;
 	}
-	
+
 	public static void main(String args[]) {
 		String requete = "SELECT * FROM Utilisateur;";
 		try {
@@ -42,5 +43,6 @@ class MyConnection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 }

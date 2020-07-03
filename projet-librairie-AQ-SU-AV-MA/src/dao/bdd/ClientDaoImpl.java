@@ -9,6 +9,7 @@ import java.util.List;
 
 import dao.ClientDao;
 import models.Client;
+import models.Utilisateur;
 
 public class ClientDaoImpl implements ClientDao {
 	Client client;
@@ -106,9 +107,6 @@ public class ClientDaoImpl implements ClientDao {
 		return client;
 	}
 
-	
-	
-	
 	@Override
 	public List<Client> getAll() {
 		Connection c = MyConnection.getConnection();
@@ -185,6 +183,25 @@ public class ClientDaoImpl implements ClientDao {
 			try {
 				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE num_compte = ?;");
 				ps.setInt(1, pNumCompte);
+				ResultSet r = ps.executeQuery();
+				if (r.next()) {
+					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
+							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return client;
+	}
+
+	@Override
+	public Utilisateur findByLogin(String pLogin) {
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE login = ?;");
+				ps.setString(1, pLogin);
 				ResultSet r = ps.executeQuery();
 				if (r.next()) {
 					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
