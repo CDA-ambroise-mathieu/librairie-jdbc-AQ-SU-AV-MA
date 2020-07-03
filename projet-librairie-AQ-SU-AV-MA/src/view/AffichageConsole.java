@@ -2,6 +2,7 @@ package view;
 
 import java.util.Scanner;
 
+import intelligence.ClientService;
 import intelligence.UtilisateurService;
 import models.Session;
 
@@ -69,9 +70,10 @@ public class AffichageConsole {
 			//user : Client
 			case "client":
 				System.out.println("(1) Mes Commandes");
-				System.out.println("(2) Lister Livre");
-				System.out.println("(3) Déconnexion");
-				System.out.println("(4) Quitter");
+				System.out.println("(2) Annuler Commande");
+				System.out.println("(3) Lister Livre");
+				System.out.println("(4) Déconnexion");
+				System.out.println("(5) Quitter");
 				System.out.print("Choix : ");
 				
 				//checking next input is an Integer
@@ -384,17 +386,21 @@ public class AffichageConsole {
 	 * @param choix user choice of the main menu
 	 */
 	public void choixMenuClient(int choix) {
+		ClientService cs = new ClientService();
 		switch (choix) {
 		case 1: // Mes Commandes
-			System.out.println("LISTING DES COMMANDES");
+			System.out.println("*** LISTING DES COMMANDES ***");
+			cs.listerCommandes();
 			break;
-		case 2: // Lister livres
+		case 2:
+			cs.annulerCommand();
+		case 3: // Lister livres
 			listerLivres();
 			break;
-		case 3: // Déconnexion
+		case 4: // Déconnexion
 			deconnexion();
 			break;
-		case 4: // Quitter
+		case 5: // Quitter
 			quitter();
 			break;
 		default:
