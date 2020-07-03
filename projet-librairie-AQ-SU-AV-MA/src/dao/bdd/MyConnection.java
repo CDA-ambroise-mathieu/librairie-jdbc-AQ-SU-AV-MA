@@ -8,9 +8,9 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
-class MyConnection {
+public class MyConnection {
 	private static Connection connexion = null;
-
+ 
 	private MyConnection() {
 
 		DataSource dataSource = MyDataSourceFactory.getMySQLDataSource();
