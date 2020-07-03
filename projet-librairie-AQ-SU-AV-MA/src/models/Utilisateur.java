@@ -6,37 +6,39 @@ import lombok.Data;
 public class Utilisateur {
 
 	private int id_utilisateur;
-	private String prenom;
 	private String nom;
+	private String prenom;
 	private String role;
-	private int num_compte;
 	private String login;
 	private String password;
 	private boolean inscrit;
+	private boolean masque;
 	
-	public Utilisateur(int pId_utilisateur, String pPrenom, String pNom) {
+
+	public Utilisateur(String nom, String prenom, String role, String login, String password,
+			boolean inscrit, boolean masque) {
 		super();
-
-		this.id_utilisateur = pId_utilisateur;
-		this.prenom = pPrenom;
-		this.nom = pNom;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.role = role;
+		this.login = login;
+		this.password = password;
+		this.inscrit = inscrit;
+		this.masque = masque;
 	}
 
-	public Utilisateur(String pPrenom, String pNom, String pRole, int pNum_compte, String pLogin, String pPassword) {
-		this.prenom = pPrenom;
-		this.nom = pNom;
-		this.role = pRole;
-		this.num_compte = pNum_compte;
-		this.login = pLogin;
-		this.password = pPassword;
-	}
-
-	public Utilisateur(String pPrenom, String pNom) {
+	public Utilisateur(int id_utilisateur, String nom, String prenom, String role, String login,
+			String password, boolean inscrit, boolean masque) {
 		super();
-		this.prenom = pPrenom;
-		this.nom = pNom;
+		this.id_utilisateur = id_utilisateur;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.role = role;
+		this.login = login;
+		this.password = password;
+		this.inscrit = inscrit;
+		this.masque = masque;
 	}
-
 	public Utilisateur() {
 		super();
 	}
@@ -64,44 +66,6 @@ public class Utilisateur {
 
 	public void setNom(String pNom) {
 		this.nom = pNom;
-	}
-
-	public Utilisateur(int pId_utilisateur, String pPrenom, String pNom, String pRole, int pNum_compte, String pLogin,
-			String pPassword, boolean pInscrit) {
-		super();
-		this.id_utilisateur = pId_utilisateur;
-		this.prenom = pPrenom;
-		this.nom = pNom;
-		this.role = pRole;
-		this.num_compte = pNum_compte;
-		this.login = pLogin;
-		this.password = pPassword;
-		this.inscrit = pInscrit;
-	}
-
-	public Utilisateur(int pId_utilisateur, String pPrenom, String pNom, String pRole, int pNum_compte, String pLogin,
-			String pPassword) { // constructeur pour findById
-		super();
-		this.id_utilisateur = pId_utilisateur;
-		this.prenom = pPrenom;
-		this.nom = pNom;
-		this.role = pRole;
-		this.num_compte = pNum_compte;
-		this.login = pLogin;
-		this.password = pPassword;
-	}
-	
-
-	public Utilisateur(String pLogin, String pPrenom, String pNom, String pRole, int pNum_compte,int pId_utilisateur,
-			String pPassword) { // constructeur pour findByLogin
-		super();
-		this.id_utilisateur = pId_utilisateur;
-		this.prenom = pPrenom;
-		this.nom = pNom;
-		this.role = pRole;
-		this.num_compte = pNum_compte;
-		this.login = pLogin;
-		this.password = pPassword;
 	}
 
 }

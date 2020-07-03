@@ -21,19 +21,18 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 //	public DAO(Connection conn) { // il faut la connexion avec la BDD créée pour que 
 //	ça fonctionne non ?
 //		this.connect = conn;
-//	}
+//	
 
 	@Override
 	public Utilisateur save(Utilisateur pUtilisateur) {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("insert into utilisateur (nom, prenom, role, num_compte, login, password) values (?,?,?,?,?,?);",
+				PreparedStatement ps = c.prepareStatement("insert into utilisateur (nom, prenom, role, login, password) values (?,?,?,?,?);",
 						PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, pUtilisateur.getNom());
 				ps.setString(2, pUtilisateur.getPrenom());
 				ps.setString(3, pUtilisateur.getRole());
-				ps.setInt(4, pUtilisateur.getNum_compte());
 				ps.setString(5, pUtilisateur.getLogin());
 				ps.setString(6, pUtilisateur.getPassword());
 				ps.executeUpdate();
@@ -71,11 +70,10 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 
 				// ajouter login et mdp
 				PreparedStatement ps = c
-						.prepareStatement("UPDATE utilisateur \r\n" + "SET nom= ? , prenom =? , role=? , num_compte=? , login=? , password=?\r\n," + "WHERE id_utilisateur=?");
+						.prepareStatement("UPDATE utilisateur \r\n" + "SET nom= ? , prenom =? , role=? , login=? , password=?\r\n," + "WHERE id_utilisateur=?");
 				ps.setString(1, pUtilisateur.getNom());
 				ps.setString(2, pUtilisateur.getPrenom());
 				ps.setString(3,  pUtilisateur.getRole());
-				ps.setInt(4,  pUtilisateur.getNum_compte());
 				ps.setString(5, pUtilisateur.getLogin());
 				ps.setString(6, pUtilisateur.getPassword());
 				ps.setInt(7, pUtilisateur.getId_utilisateur());
@@ -87,6 +85,7 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 		}
 		return null;
 	}
+	
 	@Override
 	public Utilisateur findById(int pId_utilisateur) {
 		Utilisateur pUtilisateur = null;
@@ -98,7 +97,7 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 				ResultSet r = ps.executeQuery();
 				if (r.next())
 					pUtilisateur = new Utilisateur(r.getInt("id_utilisateur"),
-							r.getString("prenom"), r.getString("nom"), r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
+							r.getString("nom"), r.getString("prenom"), r.getString("role"), r.getString("login"), r.getString("password"), r.getBoolean("inscrit"), r.getBoolean("masque"));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -107,8 +106,8 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 	}
 	
 
-@Override
-public Utilisateur findByLogin(String pLogin) {
+
+ public Utilisateur findByLogin(String pLogin) {
 	Utilisateur pUtilisateur = null;
 	Connection c = MyConnection.getConnection();
 	if (c != null) {
@@ -117,9 +116,8 @@ public Utilisateur findByLogin(String pLogin) {
 			ps.setString(1, pLogin);
 			ResultSet r = ps.executeQuery();
 			if (r.next())
-				pUtilisateur = new Utilisateur(r.getString("login"),
-						r.getString("prenom"), r.getString("nom"), r.getString("role"), r.getInt("num_compte"), r.getInt("id_utilisateur"), r.getString("password"));
-		} catch (SQLException e) {
+				pUtilisateur = new Utilisateur(r.getString("nom"), r.getString("prenom"), r.getString("role"), r.getString("login"), r.getString("password"), r.getBoolean("inscrit"), r.getBoolean("masque"));
+			} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -144,7 +142,6 @@ public Utilisateur findByLogin(String pLogin) {
 					String nom = retour.getString("nom");
 					String prenom = retour.getString("prenom");
 					String role = retour.getString("role");
-					int num_compte = retour.getInt("num_compte");
 					String login = retour.getString("login");
 					String password = retour.getString("password");
 
@@ -152,7 +149,6 @@ public Utilisateur findByLogin(String pLogin) {
 					u1.setNom(nom);
 					u1.setPrenom(prenom);
 					u1.setRole(role);
-					u1.setNum_compte(num_compte);
 					u1.setLogin(login);
 					u1.setPassword(password);
 					listeRetour.add(u1);
