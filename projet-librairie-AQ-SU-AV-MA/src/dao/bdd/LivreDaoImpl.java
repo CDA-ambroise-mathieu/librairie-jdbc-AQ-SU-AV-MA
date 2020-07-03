@@ -73,12 +73,12 @@ public class LivreDaoImpl implements LivreDao {
 	}
 
 	@Override
-	public Livre findById(int id) {
+	public Livre findById(int pId) {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE id_livre = ?;");
-				ps.setInt(1, id);
+				ps.setInt(1, pId);
 				ResultSet r = ps.executeQuery();
 				if (r.next()) {
 					livre = new Livre(r.getInt("id_livre"), r.getString("libelle"), r.getString("titre"),
@@ -94,21 +94,21 @@ public class LivreDaoImpl implements LivreDao {
 
 	@Override
 	public Livre findByLibelle(String pLibelle) {
-//		Connection c = MyConnection.getConnection();
-//		if (c != null) {
-//			try {
-//				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE libelle = ?;");
-//				ps.setString(1, livre.getLibelle());
-//				ResultSet r = ps.executeQuery();
-//				if (r.next()) {
-//					livre = new Livre(r.getInt("id"), r.getString("libelle"), r.getString("titre"),
-//							r.getString("auteur"), r.getString("edition"), r.getInt("anneeParution"),
-//							r.getInt("quantiteEnStock"), r.getDouble("prixUnitaire"));
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE libelle = ?;");
+				ps.setString(1, pLibelle);
+				ResultSet r = ps.executeQuery();
+				if (r.next()) {
+					livre = new Livre(r.getInt("id_livre"), r.getString("libelle"), r.getString("titre"),
+							r.getString("auteur"), r.getString("edition"), r.getInt("annee_parution"),
+							r.getInt("qte_stock"), r.getDouble("prix_unitaire"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return livre;
 	}
 
@@ -132,14 +132,14 @@ public class LivreDaoImpl implements LivreDao {
 			double vPrixUnitaire;
 
 			while (vResultatSelect.next()) {
-				vId = vResultatSelect.getInt("id");
+				vId = vResultatSelect.getInt("id_livre");
 				vLibelle = vResultatSelect.getString("libelle");
 				vTitre = vResultatSelect.getString("titre");
 				vAuteur = vResultatSelect.getString("auteur");
 				vEdition = vResultatSelect.getString("edition");
-				vAnneeParution = vResultatSelect.getInt("anneeParution");
-				vQuantiteEnStock = vResultatSelect.getInt("quantiteEnStock");
-				vPrixUnitaire = vResultatSelect.getInt("prixUnitaire");
+				vAnneeParution = vResultatSelect.getInt("annee_parution");
+				vQuantiteEnStock = vResultatSelect.getInt("qte_stock");
+				vPrixUnitaire = vResultatSelect.getInt("prix_unitaire");
 
 				livre = new Livre(vId, vLibelle, vTitre, vAuteur, vEdition, vAnneeParution, vQuantiteEnStock,
 						vPrixUnitaire);
@@ -154,27 +154,83 @@ public class LivreDaoImpl implements LivreDao {
 	}
 
 	@Override
-	public Livre findByTitre(String titre) {
-		// TODO Auto-generated method stub
-		return null;
+	public Livre findByTitre(String pTitre) {
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE titre = ?;");
+				ps.setString(1, pTitre);
+				ResultSet r = ps.executeQuery();
+				if (r.next()) {
+					livre = new Livre(r.getInt("id_livre"), r.getString("libelle"), r.getString("titre"),
+							r.getString("auteur"), r.getString("edition"), r.getInt("annee_parution"),
+							r.getInt("qte_stock"), r.getDouble("prix_unitaire"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return livre;
 	}
 
 	@Override
-	public Livre findByAuteur(String auteur) {
-		// TODO Auto-generated method stub
-		return null;
+	public Livre findByAuteur(String pAuteur) {
+			Connection c = MyConnection.getConnection();
+			if (c != null) {
+				try {
+					PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE auteur = ?;");
+					ps.setString(1, pAuteur);
+					ResultSet r = ps.executeQuery();
+					if (r.next()) {
+						livre = new Livre(r.getInt("id_livre"), r.getString("libelle"), r.getString("titre"),
+								r.getString("auteur"), r.getString("edition"), r.getInt("annee_parution"),
+								r.getInt("qte_stock"), r.getDouble("prix_unitaire"));
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return livre;
 	}
 
 	@Override
-	public Livre findByAnneParution(String anneeParution) {
-		// TODO Auto-generated method stub
-		return null;
+	public Livre findByAnneParution(int pAnneeParution) {
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE annee_parution = ?;");
+				ps.setInt(1, pAnneeParution);
+				ResultSet r = ps.executeQuery();
+				if (r.next()) {
+					livre = new Livre(r.getInt("id_livre"), r.getString("libelle"), r.getString("titre"),
+							r.getString("auteur"), r.getString("edition"), r.getInt("annee_parution"),
+							r.getInt("qte_stock"), r.getDouble("prix_unitaire"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return livre;
 	}
 
 	@Override
-	public Livre findByEdition(String edition) {
-		// TODO Auto-generated method stub
-		return null;
+	public Livre findByEdition(String pEdition) {
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE edition = ?;");
+				ps.setString(1, pEdition);
+				ResultSet r = ps.executeQuery();
+				if (r.next()) {
+					livre = new Livre(r.getInt("id_livre"), r.getString("libelle"), r.getString("titre"),
+							r.getString("auteur"), r.getString("edition"), r.getInt("annee_parution"),
+							r.getInt("qte_stock"), r.getDouble("prix_unitaire"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return livre;
 	}
 
 	// Rajouter d'autres FindBy

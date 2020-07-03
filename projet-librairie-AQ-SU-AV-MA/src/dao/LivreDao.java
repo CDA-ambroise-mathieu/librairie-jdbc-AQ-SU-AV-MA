@@ -10,6 +10,6 @@ public interface LivreDao extends Dao<Livre>{
 	Livre findByLibelle(String libelle);
 	Livre findByTitre(String titre);
 	Livre findByAuteur(String auteur);
-	Livre findByAnneParution(String anneeParution);
+	Livre findByAnneParution(int anneeParution);
 	Livre findByEdition(String edition);
 }
