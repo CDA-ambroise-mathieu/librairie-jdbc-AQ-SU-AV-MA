@@ -23,16 +23,15 @@ public class LibraireService {
 	}
 
 	public void masquerCompteClient(Client pClient) {
-		pClient.setInscrit(false);
 
 	}
 
 	public void validerCreationCompte(Client pClient) {
-		pClient.setInscrit(true);
+
 	}
 
 	public void refuserCreationCompte(Client pClient) {
-		pClient.setInscrit(false);
+
 	}
 
 	public void ajouterLivre(Livre pLivre) {

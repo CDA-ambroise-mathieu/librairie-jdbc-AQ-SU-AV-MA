@@ -25,9 +25,9 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 				ps.setString(1, pLibraire.getNom());
 				ps.setString(2, pLibraire.getPrenom());
 				ps.setString(3, pLibraire.getRole());
-				ps.setString(4, pLibraire.getMonCompte().getNumeroCompte());
-				ps.setString(5, pLibraire.getMonCompte().getLogin());
-				ps.setString(6, pLibraire.getMonCompte().getMotDePasse());
+				ps.setInt(4, pLibraire.getNum_compte());
+				ps.setString(5, pLibraire.getLogin());
+				ps.setString(6, pLibraire.getPassword());
 				ps.executeUpdate();
 				ResultSet resultat = ps.getGeneratedKeys();
 				if (resultat.next()) {
@@ -48,7 +48,7 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement("DELETE from utilisateur \r\n" + "WHERE id_utilisateur=?");
-				ps.setInt(1, pLibraire.getId());
+				ps.setInt(1, pLibraire.getId_utilisateur());
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -66,7 +66,7 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 						"UPDATE utilisateur \r\n" + "SET nom= ? , prenom =?\r\n" + "WHERE id_utilsateur=?");
 				ps.setString(1, pLibraire.getNom());
 				ps.setString(1, pLibraire.getPrenom());
-				ps.setInt(3, pLibraire.getId());
+				ps.setInt(3, pLibraire.getId_utilisateur());
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -83,6 +83,23 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 			try {
 				PreparedStatement ps = c.prepareStatement("select * from utilisateur where id_utilisateur = ?; ");
 				ps.setInt(1, id);
+				ResultSet r = ps.executeQuery();
+				if (r.next())
+					libraire = new Libraire(r.getInt("id_utilisateur"), r.getString("nom"), r.getString("prenom"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return libraire;
+	}
+
+	public Libraire fingByName(String pNom) {
+		Libraire libraire = null;
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("select * from utilisateur where nom = ?; ");
+				ps.setString(1, pNom);
 				ResultSet r = ps.executeQuery();
 				if (r.next())
 					libraire = new Libraire(r.getInt("id_utilisateur"), r.getString("nom"), r.getString("prenom"));
