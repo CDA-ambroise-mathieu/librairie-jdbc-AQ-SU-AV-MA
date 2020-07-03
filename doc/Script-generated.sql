@@ -1,20 +1,20 @@
 #------------------------------------------------------------
-#        Script MySQL.
+#        Script MariaDB
 #------------------------------------------------------------
 
+ drop database if exists librairie;
+ create or replace DATABASE librairie;
+
+ USE librairie;
+
 
 #------------------------------------------------------------
-# Table: Commande
+# Création de l utilisateur bdd
 #------------------------------------------------------------
 
-CREATE TABLE Commande(
-        id_commande  Int  Auto_increment  NOT NULL ,
-        date_commade Date NOT NULL ,
-        nb_articles  Int NOT NULL ,
-        etat         Int NOT NULL COMMENT "etat --> 1 - 5 correspond à l'état de la commande" 
-	,CONSTRAINT Commande_PK PRIMARY KEY (id_commande)
-)ENGINE=InnoDB;
-
+CREATE USER IF NOT EXISTS 'librairie_user'@'%';
+alter user 'librairie_user'@'%' identified by 'pwd';
+grant all privileges on librairie.* to 'librairie_user'@'%';
 
 #------------------------------------------------------------
 # Table: Utilisateur
@@ -27,11 +27,8 @@ CREATE TABLE Utilisateur(
         role           Varchar (50) NOT NULL ,
         num_compte     Int NOT NULL ,
         login          Varchar (50) NOT NULL ,
-        password       Varchar (200) NOT NULL ,
-        id_commande    Int NOT NULL
+        password       Varchar (200) NOT NULL
 	,CONSTRAINT Utilisateur_PK PRIMARY KEY (id_utilisateur)
-
-	,CONSTRAINT Utilisateur_Commande_FK FOREIGN KEY (id_commande) REFERENCES Commande(id_commande)
 )ENGINE=InnoDB;
 
 
@@ -47,11 +44,26 @@ CREATE TABLE Adresse(
         lieu_dit    Varchar (50) NOT NULL ,
         CP          Int NOT NULL ,
         localite    Varchar (50) NOT NULL ,
-        pays        Varchar (50) NOT NULL ,
-        id_commande Int NOT NULL
+        pays        Varchar (50) NOT NULL
 	,CONSTRAINT Adresse_PK PRIMARY KEY (id_adresse)
+)ENGINE=InnoDB;
 
-	,CONSTRAINT Adresse_Commande_FK FOREIGN KEY (id_commande) REFERENCES Commande(id_commande)
+
+#------------------------------------------------------------
+# Table: Commande
+#------------------------------------------------------------
+
+CREATE TABLE Commande(
+        id_commande    Int  Auto_increment  NOT NULL ,
+        date_commade   Date NOT NULL ,
+        nb_articles    Int NOT NULL ,
+        etat           Int NOT NULL COMMENT "etat --> 1 - 5 correspond à l'état de la commande"  ,
+        id_utilisateur Int NOT NULL ,
+        id_adresse     Int NOT NULL
+	,CONSTRAINT Commande_PK PRIMARY KEY (id_commande)
+
+	,CONSTRAINT Commande_Utilisateur_FK FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur)
+	,CONSTRAINT Commande_Adresse0_FK FOREIGN KEY (id_adresse) REFERENCES Adresse(id_adresse)
 )ENGINE=InnoDB;
 
 
