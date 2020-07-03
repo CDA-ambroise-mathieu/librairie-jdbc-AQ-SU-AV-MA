@@ -9,10 +9,9 @@ import java.util.List;
 
 import dao.Dao;
 import models.Libraire;
+import models.Utilisateur;
 
 public class LibraireDaoImpl implements Dao<Libraire> {
-
-	private static Libraire l1 = new Libraire();
 
 	@Override
 	public Libraire save(Libraire pLibraire) {
@@ -63,9 +62,9 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement(
-						"UPDATE utilisateur \r\n" + "SET nom= ? , prenom =?\r\n" + "WHERE id_utilsateur=?");
+						"UPDATE utilisateur \r\n" + "SET nom= ? , prenom =?\r\n" + "WHERE id_utilisateur=?");
 				ps.setString(1, pLibraire.getNom());
-				ps.setString(1, pLibraire.getPrenom());
+				ps.setString(2, pLibraire.getPrenom());
 				ps.setInt(3, pLibraire.getId_utilisateur());
 				ps.executeUpdate();
 			} catch (SQLException e) {
@@ -113,7 +112,7 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 	@Override
 	public List<Libraire> getAll() {
 
-		String request = "SELECT * from utilisateur where role = libraire;";
+		String request = "SELECT * from utilisateur where role = 'libraire';";
 		PreparedStatement ps;
 		ArrayList<Libraire> listeRetour = new ArrayList<>();
 		Connection c = MyConnection.getConnection();
@@ -127,7 +126,7 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 					int id = retour.getInt("id_utilisateur");
 					String nom = retour.getString("nom");
 					String prenom = retour.getString("prenom");
-
+					Libraire l1 = new Libraire();
 					l1.setId(id);
 					l1.setNom(nom);
 					l1.setPrenom(prenom);
@@ -138,6 +137,25 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 			}
 		}
 		return listeRetour;
+	}
+
+	@Override
+	public Utilisateur findByLogin(String pLogin) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void removeById(int pId) {
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("DELETE from utilisateur \r\n" + "WHERE id_utilisateur=?");
+				ps.setInt(1, pId);
+				ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

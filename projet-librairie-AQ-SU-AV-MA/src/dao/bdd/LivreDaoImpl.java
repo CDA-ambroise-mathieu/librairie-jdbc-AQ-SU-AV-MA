@@ -9,6 +9,7 @@ import java.util.List;
 
 import dao.LivreDao;
 import models.Livre;
+import models.Utilisateur;
 
 public class LivreDaoImpl implements LivreDao {
 	Livre livre;
@@ -175,22 +176,22 @@ public class LivreDaoImpl implements LivreDao {
 
 	@Override
 	public Livre findByAuteur(String pAuteur) {
-			Connection c = MyConnection.getConnection();
-			if (c != null) {
-				try {
-					PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE auteur = ?;");
-					ps.setString(1, pAuteur);
-					ResultSet r = ps.executeQuery();
-					if (r.next()) {
-						livre = new Livre(r.getInt("id_livre"), r.getString("libelle"), r.getString("titre"),
-								r.getString("auteur"), r.getString("edition"), r.getInt("annee_parution"),
-								r.getInt("qte_stock"), r.getDouble("prix_unitaire"));
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE auteur = ?;");
+				ps.setString(1, pAuteur);
+				ResultSet r = ps.executeQuery();
+				if (r.next()) {
+					livre = new Livre(r.getInt("id_livre"), r.getString("libelle"), r.getString("titre"),
+							r.getString("auteur"), r.getString("edition"), r.getInt("annee_parution"),
+							r.getInt("qte_stock"), r.getDouble("prix_unitaire"));
 				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			return livre;
+		}
+		return livre;
 	}
 
 	@Override
@@ -231,6 +232,12 @@ public class LivreDaoImpl implements LivreDao {
 			}
 		}
 		return livre;
+	}
+
+	@Override
+	public Utilisateur findByLogin(String pLogin) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	// Rajouter d'autres FindBy
