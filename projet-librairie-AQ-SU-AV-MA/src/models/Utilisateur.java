@@ -31,6 +31,11 @@ public class Utilisateur {
 		super();
 	}
 	
+	public Utilisateur(String nom2, String prenom2, String role2, String num_compte2, String login2, String mdp,
+			boolean b, boolean c) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId_utilisateur() {
 		return id_utilisateur;
 	}

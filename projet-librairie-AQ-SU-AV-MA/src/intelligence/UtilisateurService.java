@@ -19,7 +19,6 @@ import models.Utilisateur;
 public class UtilisateurService {
 	private Scanner sc;
 	private Dao<Utilisateur> userDAO;
-	
 	public UtilisateurService() {
 		sc = new Scanner(System.in);
 		userDAO = new UtilisateurDaoImpl();
@@ -58,7 +57,6 @@ public class UtilisateurService {
 		String mdp = sc.nextLine();
 		System.out.println();
 		
-		String hash = "76495683P3N1XS91R1TL04E7649";
 		try {
 			MessageDigest md = MessageDigest.getInstance("md5");
 			md.update(mdp.getBytes());
