@@ -16,7 +16,7 @@ public class MyDataSourceFactory {
 		MariaDbDataSource mariaDbDataSource = null;
 
 		try {
-			fis = new FileInputStream("db.properties");
+			fis = new FileInputStream("sources/db.properties");
 			props.load(fis);
 			mariaDbDataSource = new MariaDbDataSource();
 			mariaDbDataSource.setUrl(props.getProperty("url"));
