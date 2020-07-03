@@ -38,5 +38,9 @@ public class Livre {
 		this.quantiteEnStock = quantiteEnStock;
 		this.prixUnitaire = prixUnitaire;
 	}
+	
+	public void setQuantiteEnStocke(int i) {
+		this.quantiteEnStock = i;
+	}
 
 }

@@ -68,7 +68,25 @@ public class LivreDaoImpl implements LivreDao {
 
 	@Override
 	public Livre update(Livre obj) {
-		// TODO Auto-generated method stub
+		Connection c = MyConnection.getConnection();
+		try {
+			// ajouter login et mdp
+			PreparedStatement ps = c
+			.prepareStatement("UPDATE livre SET libelle= ? , titre =? , auteur=?, edition=?, annee_parution=?, qte_stock=?, prix_unitaire=? WHERE id_livre=?");
+			ps.setString(1, livre.getLibelle());
+			ps.setString(2, livre.getTitre());
+			ps.setString(3, livre.getEdition());
+			ps.setString(4, livre.getAuteur());
+			ps.setInt(5, livre.getAnneeParution());
+			ps.setInt(6, livre.getQuantiteEnStock());
+			ps.setDouble(7, livre.getPrixUnitaire());
+			ps.setInt(8, livre.getId());
+			ps.executeUpdate();
+			
+			return obj;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -158,7 +176,7 @@ public class LivreDaoImpl implements LivreDao {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE titre = ?;");
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE titre = ? LIMIT 1;");
 				ps.setString(1, pTitre);
 				ResultSet r = ps.executeQuery();
 				if (r.next()) {
@@ -178,7 +196,7 @@ public class LivreDaoImpl implements LivreDao {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE auteur = ?;");
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE auteur = ? LIMIT 1;");
 				ps.setString(1, pAuteur);
 				ResultSet r = ps.executeQuery();
 				if (r.next()) {
@@ -198,7 +216,7 @@ public class LivreDaoImpl implements LivreDao {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE annee_parution = ?;");
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE annee_parution = ? LIMIT 1;");
 				ps.setInt(1, pAnneeParution);
 				ResultSet r = ps.executeQuery();
 				if (r.next()) {
@@ -218,7 +236,7 @@ public class LivreDaoImpl implements LivreDao {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE edition = ?;");
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE edition = ? LIMIT 1;");
 				ps.setString(1, pEdition);
 				ResultSet r = ps.executeQuery();
 				if (r.next()) {
@@ -234,4 +252,23 @@ public class LivreDaoImpl implements LivreDao {
 	}
 	// Rajouter d'autres FindBy
 
+
+	public boolean livreCommandee(Livre l) {
+		Connection c = MyConnection.getConnection();
+		
+		l = this.findByTitre(l.getTitre());
+		
+		boolean res =  false;
+		try {
+			PreparedStatement ps = c.prepareStatement("SELECT * FROM constituer WHERE id_livre = ?;");
+			ps.setInt(1, l.getId());
+			ResultSet result = ps.executeQuery();
+			if(result.getRow()> 0 ) res = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
 }

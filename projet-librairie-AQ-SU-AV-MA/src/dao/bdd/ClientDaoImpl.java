@@ -70,18 +70,8 @@ public class ClientDaoImpl implements ClientDao {
 	@Override
 	public Client update(Client pClient) {
 		Connection c = MyConnection.getConnection();
-		if (c != null) {
-			try {
-				PreparedStatement ps = c.prepareStatement("UPDATE utilisateur SET nom= ? , prenom =? WHERE id=?");
-				ps.setString(1, pClient.getNom());
-				ps.setString(1, pClient.getPrenom());
-				ps.setInt(3, pClient.getId_utilisateur());
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
+		UtilisateurDaoImpl udao = new UtilisateurDaoImpl();
+		return (Client) udao.update(pClient);
 	}
 
 	@Override

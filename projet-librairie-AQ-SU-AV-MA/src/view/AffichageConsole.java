@@ -8,6 +8,7 @@ import intelligence.ClientService;
 import intelligence.LibraireService;
 import intelligence.UtilisateurService;
 import models.Client;
+import models.Livre;
 import models.Session;
 
 /**
@@ -190,6 +191,7 @@ public class AffichageConsole {
 	public void deconnexion() {
 		if (!this.testRole.equals("invite")) {
 			this.testRole = "invite";
+			Session.getInstance().deconnexion();
 		} else {
 			System.out.println("Vous êtes déjà déconnecté !");
 		}
@@ -376,13 +378,38 @@ public class AffichageConsole {
 		case 3: //  Livre
 			switch(pChoixSML) {
 			case 1: // Ajouter livre
-				System.out.println("AJOUT D'UN LIVRE ");
+				System.out.println("*** Ajout d'un nouveau livre ***");
+				System.out.print("libelé : ");
+				String lbl = scanner.nextLine();
+				
+				System.out.print("titre : ");
+				String titre = scanner.nextLine();
+				
+				System.out.print("auteur : ");
+				String auteur = scanner.nextLine();
+				
+				System.out.print("edition : ");
+				String edition = scanner.nextLine();
+				
+				System.out.print("annee de parution : ");
+				int annee = scanner.nextInt();
+				scanner.nextLine();
+				
+				System.out.print("quantité en stock : ");
+				int stock = scanner.nextInt();
+				scanner.nextLine();
+				
+				System.out.print("prix unitaire : ");
+				double prix = scanner.nextDouble();
+				
+				Livre livre = new Livre(lbl, titre, auteur, edition, annee, stock, prix);
+				ls.ajouterLivre(livre);
 				break;
 			case 2: // Supprimer livre
-				System.out.println("SUPPRESSION D'UN LIVRE ");
+				ls.supprimerLivre();
 				break;
 			case 3: // Modifier quantité livre
-				System.out.println("MODIFICATION D'UN LIVRE ");
+				ls.modifierQuantiteLivre();
 				break;
 			case 4: // Annuler
 				break;

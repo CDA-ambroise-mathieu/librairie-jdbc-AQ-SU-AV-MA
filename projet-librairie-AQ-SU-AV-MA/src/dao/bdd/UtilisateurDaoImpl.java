@@ -70,13 +70,13 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 
 				// ajouter login et mdp
 				PreparedStatement ps = c
-						.prepareStatement("UPDATE utilisateur \r\n" + "SET nom= ? , prenom =? , role=? , login=? , password=?\r\n," + "WHERE id_utilisateur=?");
+						.prepareStatement("UPDATE utilisateur SET nom= ? , prenom =? , role=?, inscrit=?, masque=? WHERE id_utilisateur=?");
 				ps.setString(1, pUtilisateur.getNom());
 				ps.setString(2, pUtilisateur.getPrenom());
 				ps.setString(3,  pUtilisateur.getRole());
-				ps.setString(5, pUtilisateur.getLogin());
-				ps.setString(6, pUtilisateur.getPassword());
-				ps.setInt(7, pUtilisateur.getId_utilisateur());
+				ps.setBoolean(4, pUtilisateur.getInscrit());
+				ps.setBoolean(5, pUtilisateur.getMasque());
+				ps.setInt(6, pUtilisateur.getId_utilisateur());
 				
 				ps.executeUpdate();
 			} catch (SQLException e) {
