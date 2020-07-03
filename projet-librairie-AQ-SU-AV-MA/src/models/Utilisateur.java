@@ -12,7 +12,8 @@ public class Utilisateur {
 	private int num_compte;
 	private String login;
 	private String password;
-
+	private boolean inscrit;
+	
 	public Utilisateur(int pId_utilisateur, String pPrenom, String pNom) {
 		super();
 
