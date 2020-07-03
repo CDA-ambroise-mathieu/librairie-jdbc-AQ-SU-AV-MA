@@ -25,7 +25,6 @@ CREATE TABLE Utilisateur(
         nom            Varchar (50) NOT NULL ,
         prenom         Varchar (50) NOT NULL ,
         role           Varchar (50) NOT NULL ,
-        num_compte     Int NOT NULL ,
         login          Varchar (50) NOT NULL ,
         password       Varchar (200) NOT null,
         inscrit        Boolean not null,
@@ -61,7 +60,8 @@ CREATE TABLE Commande(
         nb_articles    Int NOT NULL ,
         etat           Int NOT NULL COMMENT "etat --> 1 - 5 correspond a l'etat de la commande"  ,
         id_utilisateur Int NOT NULL ,
-        id_adresse     Int NOT NULL
+		prix_total		Int NOT NULL,
+        id_adresse     Int NULL
 	,CONSTRAINT Commande_PK PRIMARY KEY (id_commande)
 
 	,CONSTRAINT Commande_Utilisateur_FK FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur)

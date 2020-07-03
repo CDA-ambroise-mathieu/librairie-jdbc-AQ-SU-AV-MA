@@ -7,13 +7,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.xml.bind.DatatypeConverter;
 
 import dao.Dao;
+import dao.bdd.LivreDaoImpl;
 import dao.bdd.MyConnection;
 import dao.bdd.UtilisateurDaoImpl;
+import models.Livre;
 import models.Session;
 import models.Utilisateur;
 
@@ -129,11 +132,11 @@ public class UtilisateurService {
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 
 		Utilisateur user = ((UtilisateurDaoImpl) userDAO).findByLogin(login);
 		if (user != null) {
-			if (user.getPassword() == mdp) {
+			if (user.getPassword().equals(mdp)) {
 				Session curr = Session.getInstance();
 				curr.connexion(user);
 				return true;
@@ -147,6 +150,10 @@ public class UtilisateurService {
 	}
 
 	public void listerLivres() {
-
+		LivreDaoImpl ldao = new LivreDaoImpl();
+		ArrayList<Livre> livres = (ArrayList<Livre>) ldao.getAll();
+		for (Livre livre : livres) {
+			System.out.println("("+livre.getId()+")"+livre.getTitre()+" par "+livre.getAuteur()+" - "+livre.getAnneeParution());
+		}
 	}
 }

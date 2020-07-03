@@ -168,40 +168,12 @@ public class AffichageConsole {
 	public void inscription() {
 		//Cette méthode est à modifié une fois le DAO Utilisateur fini
 		UtilisateurService us = new UtilisateurService();
-		
-		System.out.println("*** Quel rôle voulez vous ? ***");
-		System.out.println("(1) Client");
-		System.out.println("(2) Libraire");
-		System.out.println("(3) Retour");
-		System.out.print("Choix : ");
-		
-		
-		if (scanner.hasNextInt()) {
-			int choix = scanner.nextInt();
-			scanner.nextLine();
-			switch (choix) {
-			case 1:
-				if(us.inscription()) {
-					this.testRole = "client";
-				}else {
-					System.out.println("Erreur lors de l'inscription, veuillez recommencer !");
-				}
-				break;
-			case 2:
-				this.testRole = "libraire";
-				break;
-			case 3:
-				break;
-			default:
-				System.out.println("Ce n'est pas un bon choix !");
-				break;
-			}
-		} else {
-			scanner.nextLine();
-			System.out.println("Veuillez n'entrer que des chiffres !");
-			inscription();
+		if(us.inscription()) {
+			System.out.println("*** Inscription réussi, veuillez attendre d'être validé par un libraire. ***");
+		}else {
+			System.out.println("Problème d'inscription, veuillez recommencer.");
 		}
-		System.out.println("*** Vous êtes maintenant connecté en temps que "+this.testRole+".");
+		
 	}
 
 	/**
@@ -234,18 +206,8 @@ public class AffichageConsole {
 	 * to the name and the author
 	 */
 	public void listerLivres() {
-		//Méthode à modifié une fois la DAO de livre fini.
-		System.out.println("*** Liste des livres actuel ***");
-		System.out.println("- Ghost in Love par Marc L�vy");
-		System.out.println("- Au soleil redout� par Michel Bussi");
-		System.out.println("- Miroir de nos peines par Pierre Lemaitre");
-		System.out.println("- Le Signal par Maxime Chattam");
-		System.out.println("- Changer l'eau des fleurs par Val�rie Perrin");
-		System.out.println("- Le lambeau par Philippe Lan�on");
-		System.out.println("- Je te promets la libert� par Laurent Gounelle");
-		System.out.println("- Ce que savait la nuit par Arnaldur Indridason");
-		System.out.println("- A la recherche d'Alice Love");
-		System.out.println("- Le Consentement par Vanessa Springora");
+		UtilisateurService us = new UtilisateurService();
+		us.listerLivres();
 	}
 
 	/*************/

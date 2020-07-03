@@ -28,13 +28,13 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("insert into utilisateur (nom, prenom, role, login, password) values (?,?,?,?,?);",
+				PreparedStatement ps = c.prepareStatement("insert into utilisateur (nom, prenom, role, login, password,inscrit, masque) values (?,?,?,?,?,false,false);",
 						PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, pUtilisateur.getNom());
 				ps.setString(2, pUtilisateur.getPrenom());
 				ps.setString(3, pUtilisateur.getRole());
-				ps.setString(5, pUtilisateur.getLogin());
-				ps.setString(6, pUtilisateur.getPassword());
+				ps.setString(4, pUtilisateur.getLogin());
+				ps.setString(5, pUtilisateur.getPassword());
 				ps.executeUpdate();
 				ResultSet resultat = ps.getGeneratedKeys();
 				if (resultat.next()) {
