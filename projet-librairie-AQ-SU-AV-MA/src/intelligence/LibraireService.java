@@ -2,6 +2,7 @@ package intelligence;
 
 import dao.Dao;
 import dao.LivreDao;
+import dao.bdd.ClientDaoImpl;
 import dao.bdd.CommandeDaoImpl;
 import dao.bdd.LivreDaoImpl;
 import models.Client;
@@ -23,15 +24,22 @@ public class LibraireService {
 	}
 
 	public void masquerCompteClient(Client pClient) {
-
+		ClientDaoImpl cdao = new ClientDaoImpl();
+		pClient.setMasque(true);
+		cdao.update(pClient);
+		
 	}
 
 	public void validerCreationCompte(Client pClient) {
-
+		ClientDaoImpl cdao = new ClientDaoImpl();
+		pClient.setInscrit(true);
+		cdao.update(pClient);
 	}
 
 	public void refuserCreationCompte(Client pClient) {
-
+		ClientDaoImpl cdao = new ClientDaoImpl();
+		pClient.setMasque(true);
+		cdao.update(pClient);
 	}
 
 	public void ajouterLivre(Livre pLivre) {

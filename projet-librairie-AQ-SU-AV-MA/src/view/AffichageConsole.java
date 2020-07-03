@@ -1,9 +1,13 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import dao.bdd.ClientDaoImpl;
 import intelligence.ClientService;
+import intelligence.LibraireService;
 import intelligence.UtilisateurService;
+import models.Client;
 import models.Session;
 
 /**
@@ -306,25 +310,41 @@ public class AffichageConsole {
 	 * @param pChoixSML user choice of the sub menu
 	 */
 	public void choixSousMenuLibraire(int pChoixML, int pChoixSML) {
+		LibraireService ls = new LibraireService();
+		ClientDaoImpl cdao = new ClientDaoImpl();
+		ArrayList<Client> clients = (ArrayList<Client>) cdao.getAll();
+		ArrayList<Client> clientsInscrit = (ArrayList<Client>) cdao.getAllInscrit();
 		switch (pChoixML) {
 		case 1: // Client
-
+		
 			// L'utilisateur a choisi précédemment le sous menu Client
 			switch(pChoixSML) {
 			case 1: // Valider Compte
-				System.out.println("VALIDATION DE COMPTE");
+				clientsInscrit.stream().forEach(x->System.out.println("("+x.getId_utilisateur()+")"+x.getLogin()+" : "+x.getPrenom()+" "+x.getNom()));
+				System.out.print("Choix : ");
+				int idLV = scanner.nextInt();
+				scanner.nextLine();
+				ls.validerCreationCompte(cdao.findById(idLV));
 				break;
 
 			case 2: // Refuser Compte
-				System.out.println("REFUS DE COMPTE");
+				clientsInscrit.stream().forEach(x->System.out.println("("+x.getId_utilisateur()+")"+x.getLogin()+" : "+x.getPrenom()+" "+x.getNom()));
+				System.out.print("Choix : ");
+				int idLR = scanner.nextInt();
+				scanner.nextLine();
+				ls.refuserCreationCompte(cdao.findById(idLR));
 				break;
 				
 			case 3: // Désactiver Compte
-				System.out.println("DESACTION DE COMPTE");
+				clients.stream().forEach(x->System.out.println("("+x.getId_utilisateur()+")"+x.getLogin()+" : "+x.getPrenom()+" "+x.getNom()));
+				System.out.print("Choix : ");
+				int idLM = scanner.nextInt();
+				scanner.nextLine();
+				ls.masquerCompteClient(cdao.findById(idLM));
 				break;
 
 			case 4: // Lister livre
-				System.out.println("LISTER LES CLIENTS");
+				new UtilisateurService().listerLivres();
 				break;
 
 			case 5: // Annuler
