@@ -1,7 +1,20 @@
 #------------------------------------------------------------
-#        Script MySQL.
+#        Script MariaDB
 #------------------------------------------------------------
 
+ drop database if exists librairie;
+ create or replace DATABASE librairie;
+
+ USE librairie;
+
+
+#------------------------------------------------------------
+# Creation de l utilisateur bdd
+#------------------------------------------------------------
+
+CREATE USER IF NOT EXISTS 'librairie_user'@'%';
+alter user 'librairie_user'@'%' identified by 'pwd';
+grant all privileges on librairie.* to 'librairie_user'@'%';
 
 #------------------------------------------------------------
 # Table: Utilisateur
@@ -44,7 +57,7 @@ CREATE TABLE Commande(
         id_commande    Int  Auto_increment  NOT NULL ,
         date_commade   Date NOT NULL ,
         nb_articles    Int NOT NULL ,
-        etat           Int NOT NULL COMMENT "etat --> 1 - 5 correspond à l'état de la commande"  ,
+        etat           Int NOT NULL COMMENT "etat --> 1 - 5 correspond a l'etat de la commande"  ,
         id_utilisateur Int NOT NULL ,
         id_adresse     Int NOT NULL
 	,CONSTRAINT Commande_PK PRIMARY KEY (id_commande)
