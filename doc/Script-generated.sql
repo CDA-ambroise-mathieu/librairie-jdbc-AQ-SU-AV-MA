@@ -15,6 +15,23 @@
 CREATE USER IF NOT EXISTS 'librairie_user'@'%';
 alter user 'librairie_user'@'%' identified by 'pwd';
 grant all privileges on librairie to 'librairie_user'@'%';
+#------------------------------------------------------------
+#        Script MariaDB
+#------------------------------------------------------------
+
+ drop database if exists librairie;
+ create or replace DATABASE librairie;
+
+ USE librairie;
+
+
+#------------------------------------------------------------
+# Création de l utilisateur bdd
+#------------------------------------------------------------
+
+CREATE USER IF NOT EXISTS 'librairie_user'@'%';
+alter user 'librairie_user'@'%' identified by 'pwd';
+grant all privileges on librairie.* to 'librairie_user'@'%';
 
 #------------------------------------------------------------
 # Table: Utilisateur
