@@ -2,15 +2,12 @@ package dao.bdd;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.sql.DataSource;
 
 public class MyConnection {
-import models.Libraire;
 	private static Connection connexion = null;
- 
+
 	private MyConnection() {
 
 		DataSource dataSource = MyDataSourceFactory.getMySQLDataSource();
@@ -29,19 +26,7 @@ import models.Libraire;
 	}
 
 	public static void main(String args[]) {
-		String requete = "SELECT * FROM Utilisateur;";
-		try {
-			Connection co = MyConnection.getConnection();
-			PreparedStatement statement = co.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-			ResultSet result = statement.executeQuery();
-			while(result.next()) {
-				int str = result.getInt("id_utilisateur");
-				System.out.println("Ca marche "+str);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 	}
+
 }
