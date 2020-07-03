@@ -3,6 +3,7 @@ package view;
 import java.util.Scanner;
 
 import intelligence.UtilisateurService;
+import models.Session;
 
 /**
  * Provide the class that will display and call
@@ -154,8 +155,11 @@ public class AffichageConsole {
 	 */
 	public void connexion() {
 		// Cette endroit est à modifier en conséquence une fois le DAO Utilisateur fini
-		this.testRole = "libraire";
-		System.out.println("********  Bonjour " + this.testRole + "  ********");
+		UtilisateurService us = new UtilisateurService();
+		if(us.authentification()) {
+			this.testRole = Session.getInstance().getCurrentUser().getRole();
+			System.out.println("*** Bonjour "+Session.getInstance().getCurrentUser().getLogin()+" ***");
+		}
 	}
 
 	/**
