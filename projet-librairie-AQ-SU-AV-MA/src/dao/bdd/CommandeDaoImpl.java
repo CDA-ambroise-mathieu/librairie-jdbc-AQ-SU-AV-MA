@@ -21,11 +21,12 @@ public class CommandeDaoImpl implements Dao<Commande> {
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement(
-						"insert into commande (dateCommande, nombreArticles, livrée ) values (?,?,?); ",
+						"insert into commande (date_commande, nb_articles, livree, annulee) values (?,?,?,?); ",
 						PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, pCommande.getDateCommande());
 				ps.setInt(2, pCommande.getNombreArticles());
 				ps.setBoolean(3, pCommande.isLivree());
+				ps.setBoolean(4, pCommande.isAnnulee());
 				ps.executeUpdate();
 				ResultSet resultat = ps.getGeneratedKeys();
 				if (resultat.next()) {
@@ -46,7 +47,7 @@ public class CommandeDaoImpl implements Dao<Commande> {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("DELETE from commande \r\n" + "WHERE id=?");
+				PreparedStatement ps = c.prepareStatement("DELETE from commande \r\n" + "WHERE id_commande=?");
 				ps.setInt(1, pCommande.getId());
 				ps.executeUpdate();
 			} catch (SQLException e) {
@@ -60,11 +61,12 @@ public class CommandeDaoImpl implements Dao<Commande> {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement(
-						"UPDATE commande \r\n" + "SET nom= ? , prenom =? , livree=?\r\n" + "WHERE id=?");
+				PreparedStatement ps = c.prepareStatement("UPDATE commande \r\n"
+						+ "SET date_commande= ? , nb_articles =? , livree=? , annulee =?\r\n" + "WHERE id_commande=?");
 				ps.setString(1, pCommande.getDateCommande());
 				ps.setInt(2, pCommande.getNombreArticles());
 				ps.setBoolean(3, pCommande.isLivree());
+				ps.setBoolean(3, pCommande.isAnnulee());
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -79,12 +81,12 @@ public class CommandeDaoImpl implements Dao<Commande> {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("select * from commande where id = ?; ");
+				PreparedStatement ps = c.prepareStatement("select * from commande where id_commande = ?; ");
 				ps.setInt(1, id);
 				ResultSet r = ps.executeQuery();
 				if (r.next())
-					commande = new Commande(r.getInt("id"), r.getString("dateCommande"), r.getInt("nombreArticles"),
-							r.getBoolean("livree"));
+					commande = new Commande(r.getInt("id_commande"), r.getString("date_commande"),
+							r.getInt("nb_articles"), r.getBoolean("livree"), r.getBoolean("annulee"));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -105,15 +107,17 @@ public class CommandeDaoImpl implements Dao<Commande> {
 				ResultSet retour = ps.executeQuery();
 
 				while (retour.next()) {
-					int id = retour.getInt("id");
-					String dateCommande = retour.getString("dateCommande");
-					int nombreArticles = retour.getInt("nombreCommande");
+					int id = retour.getInt("id_commande");
+					String dateCommande = retour.getString("date_commande");
+					int nombreArticles = retour.getInt("nb_articles");
 					boolean livree = retour.getBoolean("livree");
+					boolean annulee = retour.getBoolean("annulee");
 
 					com1.setId(id);
 					com1.setDateCommande(dateCommande);
 					com1.setNombreArticles(nombreArticles);
 					com1.setLivree(livree);
+					com1.setAnnulee(annulee);
 					listeRetour.add(com1);
 				}
 			} catch (SQLException e) {

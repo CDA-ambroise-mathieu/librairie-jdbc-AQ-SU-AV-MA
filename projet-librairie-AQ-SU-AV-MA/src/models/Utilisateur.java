@@ -5,29 +5,24 @@ import lombok.Data;
 @Data
 public class Utilisateur {
 
-	private int id;
-	private boolean inscrit = false; // comme ça pas d'ambiguïté même si sa valeur par défaut est false 
+	private int id_utilisateur;
 	private String prenom;
 	private String nom;
+	private String role;
+	private int num_compte;
+	private String login;
+	private String password;
+	private boolean inscrit;
 	
-	public Utilisateur(int pId, boolean pInscrit, String pPrenom, String pNom) {
+	public Utilisateur(int pId_utilisateur, String pPrenom, String pNom) {
 		super();
-		this.id = pId;
-		this.inscrit = pInscrit;
+		this.id_utilisateur = pId_utilisateur;
 		this.prenom = pPrenom;
 		this.nom = pNom;
 	}
 
-	public Utilisateur(boolean pInscrit, String pPrenom, String pNom) {
+	public Utilisateur(String pPrenom, String pNom) {
 		super();
-		this.inscrit = pInscrit;
-		this.prenom = pPrenom;
-		this.nom = pNom;
-	}
-
-	public Utilisateur(int pId, String pPrenom, String pNom) {
-		super();
-		this.id = pId;
 		this.prenom = pPrenom;
 		this.nom = pNom;
 	}
@@ -36,38 +31,26 @@ public class Utilisateur {
 		super();
 	}
 	
-	public Utilisateur(String nom2, String prenom2, String role, String num_compte, String login, String mdp, boolean b,
-			boolean c) {
-		// TODO Auto-generated constructor stub
+	public int getId_utilisateur() {
+		return id_utilisateur;
 	}
-
-	public int getId() {
-		return id;
-	}
-	public void setId(int pId) {
-		id = pId;
-	}
-	public boolean isInscrit() {
-		return inscrit;
-	}
-	public void setInscrit(boolean pInscrit) {
-		this.inscrit = pInscrit;
+	public void setId(int pId_utilisateur) {
+		id_utilisateur = pId_utilisateur;
 	}
 	public String getPrenom() {
 		return prenom;
 	}
+
 	public void setPrenom(String pPrenom) {
 		this.prenom = pPrenom;
 	}
+
 	public String getNom() {
 		return nom;
 	}
+
 	public void setNom(String pNom) {
 		this.nom = pNom;
-	}
-	@Override
-	public String toString() {
-		return "Utilisateur [inscrit=" + inscrit + ", prenom=" + prenom + ", nom=" + nom + "]";
 	}
 
 }
