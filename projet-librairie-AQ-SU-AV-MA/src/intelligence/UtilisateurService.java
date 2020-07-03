@@ -14,6 +14,7 @@ import javax.xml.bind.DatatypeConverter;
 import dao.Dao;
 import dao.bdd.MyConnection;
 import dao.bdd.UtilisateurDaoImpl;
+import models.Session;
 import models.Utilisateur;
 
 public class UtilisateurService {
@@ -43,19 +44,15 @@ public class UtilisateurService {
 		System.out.println("*** INSCRIPTION ***");
 		System.out.print("Nom :");
 		String nom = sc.nextLine();
-		System.out.println();
 		
 		System.out.print("Prenom :");
 		String prenom = sc.nextLine();
-		System.out.println();
 		
 		System.out.print("Login :");
 		String login = sc.nextLine();
-		System.out.println();
 		
 		System.out.print("Mot de passe :");
 		String mdp = sc.nextLine();
-		System.out.println();
 		
 		try {
 			MessageDigest md = MessageDigest.getInstance("md5");
@@ -96,20 +93,56 @@ public class UtilisateurService {
 			System.out.println("Veuillez entrer une valeur valide.");
 		}
 		
-		Utilisateur tmp = new Utilisateur(nom,prenom,role,num_compte,login,mdp,false,false);
-		//tmp = userDAO.save(tmp);
-		
-		if(tmp != null) {
-			System.out.println("Creation reussi !");
-			return true;
+		if(((UtilisateurDaoImpl)userDAO).getByLogin(login) == null) {
+			Utilisateur tmp = new Utilisateur(nom,prenom,role,num_compte,login,mdp,false,false);
+			//tmp = userDAO.save(tmp);
+			
+			if(tmp != null) {
+				System.out.println("Creation reussi !");
+				return true;
+			}else {
+				return false;
+			}
 		}else {
-			return false;
+			System.out.println("Un utilisateur possède déjà ce pseudo, veuillez recommencer !");
 		}
+		return false;
 		
 	}
 	
-	public void authentification() {
+	public boolean authentification() {
+		System.out.println("*** AUTHENTIFICATION ***");
+		System.out.print("Login : ");
+		String login = sc.nextLine();
 		
+		System.out.println("Mot de passe : ");
+		String mdp = sc.nextLine();
+		
+		try {
+			MessageDigest md = MessageDigest.getInstance("md5");
+			md.update(mdp.getBytes());
+			byte[] digest = md.digest();
+			String myHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
+			mdp = myHash;
+			
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Utilisateur user = ((UtilisateurDaoImpl)userDAO).getByLogin(login);
+		if(user != null) {
+			if(user.getPassword() == mdp) {
+				Session curr = Session.getInstance();
+				curr.connexion(user);
+				return true;
+			}else {
+				System.out.println("Mot de passe incorrect !");
+			}
+		}else {
+			System.out.println("Problème de connexion, veuillez recommencer !");
+		}
+		return false;
 	}
 	
 	public void listerLivres() {
