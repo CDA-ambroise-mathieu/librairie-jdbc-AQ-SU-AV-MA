@@ -20,6 +20,7 @@ import models.Utilisateur;
 public class UtilisateurService {
 	private Scanner sc;
 	private Dao<Utilisateur> userDAO;
+	
 	public UtilisateurService() {
 		sc = new Scanner(System.in);
 		userDAO = new UtilisateurDaoImpl();
@@ -93,9 +94,9 @@ public class UtilisateurService {
 			System.out.println("Veuillez entrer une valeur valide.");
 		}
 		
-		if(((UtilisateurDaoImpl)userDAO).getByLogin(login) == null) {
-			Utilisateur tmp = new Utilisateur(nom,prenom,role,num_compte,login,mdp,false,false);
-			//tmp = userDAO.save(tmp);
+		if(userDAO.findByLogin(login) == null) {
+			Utilisateur tmp = new Utilisateur(nom,prenom,role,login,mdp,false,false);
+			tmp = userDAO.save(tmp);
 			
 			if(tmp != null) {
 				System.out.println("Creation reussi !");
@@ -130,7 +131,7 @@ public class UtilisateurService {
 			e.printStackTrace();
 		}
 		
-		Utilisateur user = ((UtilisateurDaoImpl)userDAO).getByLogin(login);
+		Utilisateur user = ((UtilisateurDaoImpl)userDAO).findByLogin(login);
 		if(user != null) {
 			if(user.getPassword() == mdp) {
 				Session curr = Session.getInstance();

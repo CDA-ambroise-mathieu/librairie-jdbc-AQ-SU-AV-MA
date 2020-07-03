@@ -240,6 +240,12 @@ public class LivreDaoImpl implements LivreDao {
 		return null;
 	}
 
+	@Override
+	public Utilisateur findByLogin(String pLogin) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	// Rajouter d'autres FindBy
 
 }
