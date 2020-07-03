@@ -112,3 +112,7 @@ CREATE TABLE Habiter(
 	,CONSTRAINT Habiter_Utilisateur_FK FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur)
 	,CONSTRAINT Habiter_Adresse0_FK FOREIGN KEY (id_adresse) REFERENCES Adresse(id_adresse)
 )ENGINE=InnoDB;
+
+ALTER DATABASE `librairie`
+DEFAULT CHARACTER SET utf8
+DEFAULT COLLATE utf8_general_ci;
