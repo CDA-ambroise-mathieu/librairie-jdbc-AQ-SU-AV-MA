@@ -1,6 +1,7 @@
 package dao.bdd;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ public class CommandeDaoImpl implements Dao<Commande> {
 				PreparedStatement ps = c.prepareStatement(
 						"insert into commande (date_commande, nb_articles, etat) values (?,?,?); ",
 						PreparedStatement.RETURN_GENERATED_KEYS);
-				ps.setString(1, pCommande.getDateCommande());
+				ps.setDate(1, pCommande.getDateCommande());
 				ps.setInt(2, pCommande.getNombreArticles());
 				ps.setInt(3, pCommande.getEtat());
 
@@ -63,7 +64,7 @@ public class CommandeDaoImpl implements Dao<Commande> {
 			try {
 				PreparedStatement ps = c.prepareStatement("UPDATE commande \r\n"
 						+ "SET date_commande= ? , nb_articles =? ,  etat =?\r\n" + "WHERE id_commande=?");
-				ps.setString(1, pCommande.getDateCommande());
+				ps.setDate(1, pCommande.getDateCommande());
 				ps.setInt(2, pCommande.getNombreArticles());
 				ps.setInt(3, pCommande.getEtat());
 				ps.executeUpdate();
@@ -84,8 +85,8 @@ public class CommandeDaoImpl implements Dao<Commande> {
 				ps.setInt(1, id);
 				ResultSet r = ps.executeQuery();
 				if (r.next())
-					commande = new Commande(r.getInt("id_commande"), r.getString("date_commande"),
-							r.getInt("nb_articles"), r.getInt("etat"));
+					commande = new Commande(r.getInt("id_commande"), r.getDate("date_commande"),
+							r.getInt("nb_articles"), r.getInt("etat"), r.getInt("id_utilisateur"));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -107,7 +108,7 @@ public class CommandeDaoImpl implements Dao<Commande> {
 
 				while (retour.next()) {
 					int id = retour.getInt("id_commande");
-					String dateCommande = retour.getString("date_commande");
+					Date dateCommande = retour.getDate("date_commande");
 					int nombreArticles = retour.getInt("nb_articles");
 					int etat = retour.getInt("etat");
 

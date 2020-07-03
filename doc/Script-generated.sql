@@ -60,6 +60,7 @@ CREATE TABLE Commande(
         nb_articles    Int NOT NULL ,
         etat           Int NOT NULL COMMENT "etat --> 1 - 5 correspond a l'etat de la commande"  ,
         id_utilisateur Int NOT NULL ,
+		prix_total		Int NOT NULL,
         id_adresse     Int NULL
 	,CONSTRAINT Commande_PK PRIMARY KEY (id_commande)
 
