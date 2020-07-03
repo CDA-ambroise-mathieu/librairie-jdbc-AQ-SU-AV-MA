@@ -9,7 +9,6 @@ import java.util.List;
 
 import dao.Dao;
 import models.Libraire;
-import models.Utilisateur;
 
 public class LibraireDaoImpl implements Dao<Libraire> {
 
@@ -126,10 +125,20 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 					int id = retour.getInt("id_utilisateur");
 					String nom = retour.getString("nom");
 					String prenom = retour.getString("prenom");
+					String role = retour.getString("role");
+					int num = retour.getInt("num_compte");
+					String log = retour.getString(" login");
+					String password = retour.getNString("password");
+
 					Libraire l1 = new Libraire();
 					l1.setId(id);
 					l1.setNom(nom);
 					l1.setPrenom(prenom);
+					l1.setRole(role);
+					l1.setNum_compte(num);
+					l1.setLogin(log);
+					l1.setPassword(password);
+
 					listeRetour.add(l1);
 				}
 			} catch (SQLException e) {
@@ -140,9 +149,21 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 	}
 
 	@Override
-	public Utilisateur findByLogin(String pLogin) {
-		// TODO Auto-generated method stub
-		return null;
+	public Libraire findByLogin(String pLogin) {
+		Libraire libraire = null;
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("select * from utilisateur where login = ?; ");
+				ps.setString(1, pLogin);
+				ResultSet r = ps.executeQuery();
+				if (r.next())
+					libraire = new Libraire(r.getInt("id_utilisateur"), r.getString("nom"), r.getString("prenom"));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return libraire;
 	}
 
 	public void removeById(int pId) {
