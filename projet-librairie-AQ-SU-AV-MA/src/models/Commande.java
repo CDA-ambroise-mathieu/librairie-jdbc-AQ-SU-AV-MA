@@ -1,7 +1,8 @@
 package models;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.Data;
 
@@ -11,18 +12,14 @@ public class Commande {
 	private int id;
 	private Date dateCommande;
 	private int nombreArticles;
-	private List<Livre> designationArticles;
+	private Map<Livre,Integer> designationArticles;
 	private int etat; // ce nombre doit être compris entre 1et 5 en fonction de l'avancement de la
 						// commande.
 	private int id_utilisateur;
 	private double prix_total;
 
 	public Commande() {
-
-	}
-
-	public Commande(List<Livre> pDesignationArticles) {
-		this.designationArticles = pDesignationArticles;
+		designationArticles = new HashMap<>();
 	}
 
 	public Commande(int pId, Date pDateCommande, int pNombreArticles, int pEtat, int pId_utilisateur) {
@@ -37,4 +34,15 @@ public class Commande {
 		this.id_utilisateur = pId_utilisateur;
 	}
 
+	public Map<Livre,Integer> getDesignationArticles(){
+		return this.designationArticles;
+	}
+	
+	public void ajouterCommande(Livre l, int nb) {
+		if(designationArticles.containsKey(l)) {
+			designationArticles.put(l,designationArticles.get(l)+nb);
+		}else {
+			designationArticles.put(l,nb);
+		}
+	}
 }

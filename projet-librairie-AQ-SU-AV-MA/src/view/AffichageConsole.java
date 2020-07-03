@@ -72,8 +72,9 @@ public class AffichageConsole {
 				System.out.println("(1) Mes Commandes");
 				System.out.println("(2) Annuler Commande");
 				System.out.println("(3) Lister Livre");
-				System.out.println("(4) Déconnexion");
-				System.out.println("(5) Quitter");
+				System.out.println("(4) Commander des livres");
+				System.out.println("(5) Déconnexion");
+				System.out.println("(6) Quitter");
 				System.out.print("Choix : ");
 				
 				//checking next input is an Integer
@@ -392,15 +393,18 @@ public class AffichageConsole {
 			System.out.println("*** LISTING DES COMMANDES ***");
 			cs.listerCommandes();
 			break;
-		case 2:
+		case 2: // Annuler une commande
 			cs.annulerCommand();
 		case 3: // Lister livres
 			listerLivres();
 			break;
-		case 4: // Déconnexion
+		case 4: // Commander des livres
+			cs.commander();
+			break;
+		case 5: // Déconnexion
 			deconnexion();
 			break;
-		case 5: // Quitter
+		case 6: // Quitter
 			quitter();
 			break;
 		default:

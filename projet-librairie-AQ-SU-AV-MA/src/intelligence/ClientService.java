@@ -42,6 +42,8 @@ public class ClientService {
 	public void commander() {
 		HashMap<Livre,Integer> panier = new HashMap<>();
 		LivreDaoImpl ldao = new LivreDaoImpl();
+		CommandeDaoImpl cmdDao = new CommandeDaoImpl();
+		Commande curr = new Commande();
 		
 		ArrayList<Livre> livres = (ArrayList<Livre>) ldao.getAll();
 		for (Livre livre : livres) {
@@ -49,8 +51,30 @@ public class ClientService {
 		}
 		int i = 1;
 		while(i!=0) {
+			curr.getDesignationArticles().entrySet().stream().forEach(x->System.out.println(x.getKey().getTitre()+" : "+x.getValue()));
+		
+			
 			System.out.print("ID du livre à ajouter : ");
+			int id = sc.nextInt();
+			sc.nextLine();
+			
+			System.out.print("En quelle quantité : ");
+			int qte = sc.nextInt();
+			sc.nextLine();
+			
+			Livre tmp = ldao.findById(id);
+			
+			curr.ajouterCommande(tmp,qte);
+			
+			System.out.print("Continuer (0) Non (1) Oui : ");
+			i = sc.nextInt();
+			sc.nextLine();
 		}
+		
+		System.out.println("Etat du panier après finalisation : ");
+		curr.getDesignationArticles().entrySet().stream().forEach(x->System.out.println(x.getKey().getTitre()+" : "+x.getValue()));
+		
+		cmdDao.save(curr);
 	}
 	
 	public String etatCommande(int i) {
