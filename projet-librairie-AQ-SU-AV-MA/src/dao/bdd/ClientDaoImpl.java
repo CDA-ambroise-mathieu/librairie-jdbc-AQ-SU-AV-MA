@@ -9,7 +9,6 @@ import java.util.List;
 
 import dao.ClientDao;
 import models.Client;
-import models.Utilisateur;
 
 public class ClientDaoImpl implements ClientDao {
 	Client client;
@@ -97,7 +96,7 @@ public class ClientDaoImpl implements ClientDao {
 				// Avec un constructeur simple idbdd, nom , prenom
 				if (r.next()) {
 					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
-							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
+							r.getString("role"), r.getString("login"), r.getString("password"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -137,8 +136,7 @@ public class ClientDaoImpl implements ClientDao {
 		return listeClients;
 	}
 
-	@Override
-	public Utilisateur findByLogin(String pLogin) {
+	public Client findByLogin(String pLogin) {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
@@ -147,13 +145,31 @@ public class ClientDaoImpl implements ClientDao {
 				ResultSet r = ps.executeQuery();
 				if (r.next()) {
 					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
-							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
+							r.getString("role"), r.getString("login"), r.getString("password"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 		return client;
+	}
+
+	@Override
+	public Client findByPrenom(String prenom) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Client findByNom(String nom) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Client findByNumCompte(int numCompte) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

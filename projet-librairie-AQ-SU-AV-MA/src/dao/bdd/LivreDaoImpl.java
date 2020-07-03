@@ -9,7 +9,6 @@ import java.util.List;
 
 import dao.LivreDao;
 import models.Livre;
-import models.Utilisateur;
 
 public class LivreDaoImpl implements LivreDao {
 	Livre livre;
@@ -233,19 +232,6 @@ public class LivreDaoImpl implements LivreDao {
 		}
 		return livre;
 	}
-
-	@Override
-	public Utilisateur findByLogin(String pLogin) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Utilisateur findByLogin(String pLogin) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	// Rajouter d'autres FindBy
 
 }

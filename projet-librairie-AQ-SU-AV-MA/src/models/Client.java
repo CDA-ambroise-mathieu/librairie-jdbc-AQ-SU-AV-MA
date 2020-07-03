@@ -7,27 +7,26 @@ public class Client extends Utilisateur {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Client(int pId_utilisateur, String pPrenom, String pNom) {
-		super(pId_utilisateur, pPrenom, pNom);
+	public Client(int id_utilisateur, String nom, String prenom, String role, String login, String password,
+			boolean inscrit, boolean masque) {
+		super(id_utilisateur, nom, prenom, role, login, password, inscrit, masque);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Client(String pPrenom, String pNom, String pRole, int pNum_compte, String pLogin, String pPassword) {
-		super(pPrenom, pNom, pRole, pNum_compte, pLogin, pPassword);
+	public Client(int id_utilisateur, String nom, String prenom) {
+		super(id_utilisateur, nom, prenom);
 		// TODO Auto-generated constructor stub
 	}
 
-// Est il vraiement utile ??
-//	public Client(String pPrenom, String pNom) {
-//		super(pPrenom, pNom);
-//		// TODO Auto-generated constructor stub
-//	}
-
-	public Client(int id_utilisateur , String pPrenom, String pNom, String pRole, int pNum_compte, String pLogin, String pPassword) {
-		super(pPrenom, pNom, pRole, pNum_compte, pLogin, pPassword);
+	public Client(int id_utilisateur, String nom, String prenom, String role, String login, String password) {
+		super(id_utilisateur, nom, prenom, role, login, password);
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
+	public Client(String nom, String prenom, String role, String login, String password, boolean inscrit,
+			boolean masque) {
+		super(nom, prenom, role, login, password, inscrit, masque);
+		// TODO Auto-generated constructor stub
+	}
 
 }
