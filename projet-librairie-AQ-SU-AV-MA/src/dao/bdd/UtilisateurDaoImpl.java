@@ -28,12 +28,14 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				// ******* Penser à vérifer s'il faut ajouter le role par défaut! *****
-				// ******* Ajouter login et mdp!
-				PreparedStatement ps = c.prepareStatement("insert into utilisateur (nom, prenom) values (?,?);",
+				PreparedStatement ps = c.prepareStatement("insert into utilisateur (nom, prenom, role, num_compte, login, password) values (?,?,?,?,?,?);",
 						PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, pUtilisateur.getNom());
 				ps.setString(2, pUtilisateur.getPrenom());
+				ps.setString(3, pUtilisateur.getRole());
+				ps.setInt(4, pUtilisateur.getNum_compte());
+				ps.setString(5, pUtilisateur.getLogin());
+				ps.setString(6, pUtilisateur.getPassword());
 				ps.executeUpdate();
 				ResultSet resultat = ps.getGeneratedKeys();
 				if (resultat.next()) {
@@ -52,8 +54,8 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("DELETE from utilisateur \r\n" + "WHERE id=?");
-				ps.setInt(1, pUtilisateur.getId());
+				PreparedStatement ps = c.prepareStatement("DELETE from utilisateur \r\n" + "WHERE id_utilisateur=?");
+				ps.setInt(1, pUtilisateur.getId_utilisateur());
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -69,10 +71,10 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 
 				// ajouter login et mdp
 				PreparedStatement ps = c
-						.prepareStatement("UPDATE utilisateur \r\n" + "SET nom= ? , prenom =?\r\n" + "WHERE id=?");
+						.prepareStatement("UPDATE utilisateur \r\n" + "SET nom= ? , prenom =?\r\n" + "WHERE id_utilisateur=?");
 				ps.setString(1, pUtilisateur.getNom());
 				ps.setString(1, pUtilisateur.getPrenom());
-				ps.setInt(3, pUtilisateur.getId());
+				ps.setInt(3, pUtilisateur.getId_utilisateur());
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -82,16 +84,16 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 	}
 
 	@Override
-	public Utilisateur findById(int pIdentifiant) {
+	public Utilisateur findById(int pId_utilisateur) {
 		Utilisateur pUtilisateur = null;
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement("select * from utilisateur where num = ?;");
-				ps.setInt(1, pIdentifiant);
+				ps.setInt(1, pId_utilisateur);
 				ResultSet r = ps.executeQuery();
 				if (r.next())
-					pUtilisateur = new Utilisateur(r.getInt("identifiant"), r.getBoolean("inscrit"),
+					pUtilisateur = new Utilisateur(r.getInt("id_utilisateur"),
 							r.getString("prenom"), r.getString("nom"));
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -115,11 +117,11 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 				ResultSet retour = ps.executeQuery();
 
 				while (retour.next()) {
-					int id = retour.getInt("id");
+					int id_utilisateur = retour.getInt("id_utilisateur");
 					String nom = retour.getString("nom");
 					String prenom = retour.getString("prenom");
 
-					u1.setId(id);
+					u1.setId_utilisateur(id_utilisateur);
 					u1.setNom(nom);
 					u1.setPrenom(prenom);
 					listeRetour.add(u1);
