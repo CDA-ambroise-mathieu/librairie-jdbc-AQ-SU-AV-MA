@@ -1,12 +1,13 @@
 package dao.bdd;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
+
+import models.Libraire;
 
 class MyConnection {
 	private static Connection connexion = null;
@@ -27,20 +28,20 @@ class MyConnection {
 		}
 		return connexion;
 	}
-	
+
 	public static void main(String args[]) {
-		String requete = "SELECT * FROM Utilisateur;";
-		try {
-			Connection co = MyConnection.getConnection();
-			PreparedStatement statement = co.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-			ResultSet result = statement.executeQuery();
-			while(result.next()) {
-				int str = result.getInt("id_utilisateur");
-				System.out.println("Ca marche "+str);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		LibraireDaoImpl lib = new LibraireDaoImpl();
+		List<Libraire> liste = new ArrayList<>();
+		Libraire toto = new Libraire(4, "Test", "Toto", "libraire", 22, "NobToto", "112SS");
+//		lib.save(toto);
+//		lib.removeById(5);
+		lib.update(toto);
+
+		liste = lib.getAll();
+		for (Libraire libraire : liste) {
+			System.out.println(libraire);
 		}
+
 	}
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 import dao.ClientDao;
 import models.Client;
+import models.Utilisateur;
 
 public class ClientDaoImpl implements ClientDao {
 	Client client;
@@ -106,9 +107,6 @@ public class ClientDaoImpl implements ClientDao {
 		return client;
 	}
 
-	
-	
-	
 	@Override
 	public List<Client> getAll() {
 		Connection c = MyConnection.getConnection();
@@ -195,6 +193,12 @@ public class ClientDaoImpl implements ClientDao {
 			}
 		}
 		return client;
+	}
+
+	@Override
+	public Utilisateur findByLogin(String pLogin) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
