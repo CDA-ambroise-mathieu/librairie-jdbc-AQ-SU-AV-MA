@@ -9,6 +9,7 @@ import java.util.List;
 
 import dao.Dao;
 import models.Libraire;
+import models.Utilisateur;
 
 public class LibraireDaoImpl implements Dao<Libraire> {
 
@@ -138,6 +139,11 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 			}
 		}
 		return listeRetour;
+	}
+
+	@Override
+	public Utilisateur findByLogin(String pLogin) {
+		return null;
 	}
 
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 import dao.ClientDao;
 import models.Client;
+import models.Utilisateur;
 
 public class ClientDaoImpl implements ClientDao {
 	Client client;
@@ -21,12 +22,11 @@ public class ClientDaoImpl implements ClientDao {
 			PreparedStatement ps;
 			try {
 				ps = c.prepareStatement(
-						"INSERT INTO utilisateur (nom,prenom,numeroCompte,login,motDePasse,role) values (?,?,?,?,?,?); ",
+						"INSERT INTO utilisateur (nom,prenom,login,motDePasse,role) values (?,?,?,?,?); ",
 						PreparedStatement.RETURN_GENERATED_KEYS);
 
 				ps.setString(1, client.getNom());
 				ps.setString(2, client.getPrenom());
-				ps.setInt(3, client.getNum_compte());
 				ps.setString(4, client.getLogin());
 				ps.setString(5, client.getPassword());
 				ps.setString(6, client.getRole());
@@ -133,6 +133,12 @@ public class ClientDaoImpl implements ClientDao {
 			e.printStackTrace();
 		}
 		return listeClients;
+	}
+
+	@Override
+	public Utilisateur findByLogin(String pLogin) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
