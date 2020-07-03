@@ -4,7 +4,7 @@
 
  drop database if exists librairie;
  create or replace DATABASE librairie;
-
+ ALTER DATABASE librairie CHARACTER SET utf8 COLLATE utf8_general_ci;
  USE librairie;
 
 

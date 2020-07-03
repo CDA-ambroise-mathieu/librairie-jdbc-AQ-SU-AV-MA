@@ -9,7 +9,6 @@ import java.util.List;
 
 import dao.Dao;
 import models.Commande;
-import models.Utilisateur;
 
 public class CommandeDaoImpl implements Dao<Commande> {
 
@@ -123,12 +122,6 @@ public class CommandeDaoImpl implements Dao<Commande> {
 			}
 		}
 		return listeRetour;
-	}
-
-	@Override
-	public Utilisateur findByLogin(String pLogin) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

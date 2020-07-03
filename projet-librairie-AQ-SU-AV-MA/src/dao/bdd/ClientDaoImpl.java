@@ -9,7 +9,6 @@ import java.util.List;
 
 import dao.ClientDao;
 import models.Client;
-import models.Utilisateur;
 
 public class ClientDaoImpl implements ClientDao {
 	Client client;
@@ -22,15 +21,14 @@ public class ClientDaoImpl implements ClientDao {
 			PreparedStatement ps;
 			try {
 				ps = c.prepareStatement(
-						"INSERT INTO utilisateur (nom,prenom,role,num_compte,login,password) values (?,?,?,?,?,?); ",
+						"INSERT INTO utilisateur (nom,prenom,login,motDePasse,role) values (?,?,?,?,?); ",
 						PreparedStatement.RETURN_GENERATED_KEYS);
 
-				ps.setString(1, pClient.getNom());
-				ps.setString(2, pClient.getPrenom());
-				ps.setString(3, pClient.getRole());
-				ps.setInt(4, pClient.getNum_compte());
-				ps.setString(5, pClient.getLogin());
-				ps.setString(6, pClient.getPassword());
+				ps.setString(1, client.getNom());
+				ps.setString(2, client.getPrenom());
+				ps.setString(4, client.getLogin());
+				ps.setString(5, client.getPassword());
+				ps.setString(6, client.getRole());
 				ps.executeUpdate();
 
 				ResultSet resultat = ps.getGeneratedKeys();
@@ -98,7 +96,7 @@ public class ClientDaoImpl implements ClientDao {
 				// Avec un constructeur simple idbdd, nom , prenom
 				if (r.next()) {
 					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
-							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
+							r.getString("role"), r.getString("login"), r.getString("password"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -138,65 +136,7 @@ public class ClientDaoImpl implements ClientDao {
 		return listeClients;
 	}
 
-	@Override
-	public Client findByPrenom(String pPrenom) {
-		Connection c = MyConnection.getConnection();
-		if (c != null) {
-			try {
-				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE prenom = ?;");
-				ps.setString(1, pPrenom);
-				ResultSet r = ps.executeQuery();
-				if (r.next()) {
-					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
-							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return client;
-	}
-
-	@Override
-	public Client findByNom(String pNom) {
-		Connection c = MyConnection.getConnection();
-		if (c != null) {
-			try {
-				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE nom = ?;");
-				ps.setString(1, pNom);
-				ResultSet r = ps.executeQuery();
-				if (r.next()) {
-					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
-							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return client;
-	}
-
-	@Override
-	public Client findByNumCompte(int pNumCompte) {
-		Connection c = MyConnection.getConnection();
-		if (c != null) {
-			try {
-				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE num_compte = ?;");
-				ps.setInt(1, pNumCompte);
-				ResultSet r = ps.executeQuery();
-				if (r.next()) {
-					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
-							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return client;
-	}
-
-	@Override
-	public Utilisateur findByLogin(String pLogin) {
+	public Client findByLogin(String pLogin) {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
@@ -205,13 +145,31 @@ public class ClientDaoImpl implements ClientDao {
 				ResultSet r = ps.executeQuery();
 				if (r.next()) {
 					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
-							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
+							r.getString("role"), r.getString("login"), r.getString("password"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 		return client;
+	}
+
+	@Override
+	public Client findByPrenom(String prenom) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Client findByNom(String nom) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Client findByNumCompte(int numCompte) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

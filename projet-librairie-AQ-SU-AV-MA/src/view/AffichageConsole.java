@@ -2,6 +2,9 @@ package view;
 
 import java.util.Scanner;
 
+import intelligence.UtilisateurService;
+import models.Session;
+
 /**
  * Provide the class that will display and call
  * necessary DAO to setup users and their actions.
@@ -152,8 +155,11 @@ public class AffichageConsole {
 	 */
 	public void connexion() {
 		// Cette endroit est à modifier en conséquence une fois le DAO Utilisateur fini
-		this.testRole = "libraire";
-		System.out.println("********  Bonjour " + this.testRole + "  ********");
+		UtilisateurService us = new UtilisateurService();
+		if(us.authentification()) {
+			this.testRole = Session.getInstance().getCurrentUser().getRole();
+			System.out.println("*** Bonjour "+Session.getInstance().getCurrentUser().getLogin()+" ***");
+		}
 	}
 
 	/**
@@ -161,6 +167,7 @@ public class AffichageConsole {
 	 */
 	public void inscription() {
 		//Cette méthode est à modifié une fois le DAO Utilisateur fini
+		UtilisateurService us = new UtilisateurService();
 		
 		System.out.println("*** Quel rôle voulez vous ? ***");
 		System.out.println("(1) Client");
@@ -174,7 +181,11 @@ public class AffichageConsole {
 			scanner.nextLine();
 			switch (choix) {
 			case 1:
-				this.testRole = "client";
+				if(us.inscription()) {
+					this.testRole = "client";
+				}else {
+					System.out.println("Erreur lors de l'inscription, veuillez recommencer !");
+				}
 				break;
 			case 2:
 				this.testRole = "libraire";
