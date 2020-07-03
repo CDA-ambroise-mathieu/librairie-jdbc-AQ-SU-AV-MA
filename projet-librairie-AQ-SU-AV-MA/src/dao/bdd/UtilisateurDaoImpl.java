@@ -87,7 +87,6 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 		}
 		return null;
 	}
-	// faire pareil que find by id mais find by login 
 	@Override
 	public Utilisateur findById(int pId_utilisateur) {
 		Utilisateur pUtilisateur = null;
@@ -108,7 +107,6 @@ public class UtilisateurDaoImpl implements Dao<Utilisateur> {
 	}
 	
 
-// find by login 
 @Override
 public Utilisateur findByLogin(String pLogin) {
 	Utilisateur pUtilisateur = null;
@@ -131,7 +129,6 @@ public Utilisateur findByLogin(String pLogin) {
 	@Override
 	public List<Utilisateur> getAll() {
 
-		// Penser à ajouter login et mdp.
 		String request = "SELECT * from utilisateur;";
 		PreparedStatement ps;
 		ArrayList<Utilisateur> listeRetour = new ArrayList<>();
@@ -146,11 +143,18 @@ public Utilisateur findByLogin(String pLogin) {
 					int id_utilisateur = retour.getInt("id_utilisateur");
 					String nom = retour.getString("nom");
 					String prenom = retour.getString("prenom");
-					String role = retour.getString
+					String role = retour.getString("role");
+					int num_compte = retour.getInt("num_compte");
+					String login = retour.getString("login");
+					String password = retour.getString("password");
 
 					u1.setId_utilisateur(id_utilisateur);
 					u1.setNom(nom);
 					u1.setPrenom(prenom);
+					u1.setRole(role);
+					u1.setNum_compte(num_compte);
+					u1.setLogin(login);
+					u1.setPassword(password);
 					listeRetour.add(u1);
 				}
 			} catch (SQLException e) {
