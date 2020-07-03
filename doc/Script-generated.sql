@@ -2,6 +2,26 @@
 #        Script MySQL.
 #------------------------------------------------------------
 
+ CREATE DATABASE IF NOT EXISTS librairie;
+
+ USE librairie;
+#------------------------------------------------------------
+# Reset bdd
+#-----------------------------------------------------------
+
+DROP IF EXISTS Commande;
+DROP IF EXISTS Utilisateur;
+DROP IF EXISTS Adresse;
+DROP IF EXISTS Livre;
+DROP IF EXISTS Constituer;
+DROP IF EXISTS Habiter;
+
+#------------------------------------------------------------
+# Création de l utilisateur bdd
+#------------------------------------------------------------
+
+CREATE USER IF NOT EXISTS 'librairie_user'@'%';
+
 
 #------------------------------------------------------------
 # Table: Utilisateur
