@@ -26,9 +26,9 @@ public class ClientDaoImpl implements ClientDao {
 
 				ps.setString(1, client.getNom());
 				ps.setString(2, client.getPrenom());
-				ps.setString(3, client.getMonCompte().getNumeroCompte());
-				ps.setString(4, client.getMonCompte().getLogin());
-				ps.setString(5, client.getMonCompte().getMotDePasse());
+				ps.setInt(3, client.getNum_compte());
+				ps.setString(4, client.getLogin());
+				ps.setString(5, client.getPassword());
 				ps.setString(6, client.getRole());
 				ps.executeUpdate();
 
@@ -51,7 +51,7 @@ public class ClientDaoImpl implements ClientDao {
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement("DELETE FROM utilisateur WHERE id = ?;");
-				ps.setInt(1, client.getId());
+				ps.setInt(1, client.getId_utilisateur());
 				int nbr = ps.executeUpdate();
 				listeDesClients.remove(client);
 				if (0 != nbr) {
@@ -75,7 +75,7 @@ public class ClientDaoImpl implements ClientDao {
 				PreparedStatement ps = c.prepareStatement("UPDATE utilisateur SET nom= ? , prenom =? WHERE id=?");
 				ps.setString(1, pClient.getNom());
 				ps.setString(1, pClient.getPrenom());
-				ps.setInt(3, pClient.getId());
+				ps.setInt(3, pClient.getId_utilisateur());
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -90,7 +90,7 @@ public class ClientDaoImpl implements ClientDao {
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement("SELECT * FROM utilisateur WHERE id = ?;");
-				ps.setInt(1, client.getId());
+				ps.setInt(1, client.getId_utilisateur());
 				ResultSet r = ps.executeQuery();
 
 				// Avec un constructeur simple idbdd, nom , prenom
