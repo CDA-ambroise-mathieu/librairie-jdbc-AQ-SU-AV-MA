@@ -7,11 +7,10 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+public class MyConnection {
 import models.Libraire;
-
-class MyConnection {
 	private static Connection connexion = null;
-
+ 
 	private MyConnection() {
 
 		DataSource dataSource = MyDataSourceFactory.getMySQLDataSource();
