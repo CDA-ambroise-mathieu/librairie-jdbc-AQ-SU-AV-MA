@@ -20,14 +20,14 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement(
-						"insert into utilisateur (nom,prenom,numeroCompte,login,motDePasse,role) values (?,?,?,?,?,?); ",
+						"insert into utilisateur (nom, prenom, role, num_compte, login, password) values (?,?,?,?,?,?); ",
 						PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, pLibraire.getNom());
 				ps.setString(2, pLibraire.getPrenom());
-				ps.setString(3, pLibraire.getMonCompte().getNumeroCompte());
-				ps.setString(4, pLibraire.getMonCompte().getLogin());
-				ps.setString(5, pLibraire.getMonCompte().getMotDePasse());
-				ps.setString(6, pLibraire.getRole());
+				ps.setString(3, pLibraire.getRole());
+				ps.setString(4, pLibraire.getMonCompte().getNumeroCompte());
+				ps.setString(5, pLibraire.getMonCompte().getLogin());
+				ps.setString(6, pLibraire.getMonCompte().getMotDePasse());
 				ps.executeUpdate();
 				ResultSet resultat = ps.getGeneratedKeys();
 				if (resultat.next()) {
@@ -47,7 +47,7 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("DELETE from utilisateur \r\n" + "WHERE id=?");
+				PreparedStatement ps = c.prepareStatement("DELETE from utilisateur \r\n" + "WHERE id_utilisateur=?");
 				ps.setInt(1, pLibraire.getId());
 				ps.executeUpdate();
 			} catch (SQLException e) {
@@ -62,8 +62,8 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c
-						.prepareStatement("UPDATE utilisateur \r\n" + "SET nom= ? , prenom =?\r\n" + "WHERE id=?");
+				PreparedStatement ps = c.prepareStatement(
+						"UPDATE utilisateur \r\n" + "SET nom= ? , prenom =?\r\n" + "WHERE id_utilsateur=?");
 				ps.setString(1, pLibraire.getNom());
 				ps.setString(1, pLibraire.getPrenom());
 				ps.setInt(3, pLibraire.getId());
@@ -81,11 +81,11 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("select * from utilisateur where id = ?; ");
+				PreparedStatement ps = c.prepareStatement("select * from utilisateur where id_utilisateur = ?; ");
 				ps.setInt(1, id);
 				ResultSet r = ps.executeQuery();
 				if (r.next())
-					libraire = new Libraire(r.getInt("id"), r.getString("nom"), r.getString("prenom"));
+					libraire = new Libraire(r.getInt("id_utilisateur"), r.getString("nom"), r.getString("prenom"));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -107,7 +107,7 @@ public class LibraireDaoImpl implements Dao<Libraire> {
 				ResultSet retour = ps.executeQuery();
 
 				while (retour.next()) {
-					int id = retour.getInt("id");
+					int id = retour.getInt("id_utilisateur");
 					String nom = retour.getString("nom");
 					String prenom = retour.getString("prenom");
 

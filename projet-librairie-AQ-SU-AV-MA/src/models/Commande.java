@@ -30,4 +30,12 @@ public class Commande {
 		this.livree = pLivree;
 	}
 
+	public Commande(int pId, String pDateCommande, int pNombreArticles, boolean pLivree, boolean pAnnulee) {
+		this.id = pId;
+		this.dateCommande = pDateCommande;
+		this.nombreArticles = pNombreArticles;
+		this.livree = pLivree;
+		this.annulee = pAnnulee;
+	}
+
 }
