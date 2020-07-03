@@ -57,7 +57,7 @@ CREATE TABLE Adresse(
 
 CREATE TABLE Commande(
         id_commande    Int  Auto_increment  NOT NULL ,
-        date_commade   Date NOT NULL ,
+        date_commande   Date NOT NULL ,
         nb_articles    Int NOT NULL ,
         etat           Int NOT NULL COMMENT "etat --> 1 - 5 correspond a l'etat de la commande"  ,
         id_utilisateur Int NOT NULL ,
