@@ -234,18 +234,8 @@ public class AffichageConsole {
 	 * to the name and the author
 	 */
 	public void listerLivres() {
-		//Méthode à modifié une fois la DAO de livre fini.
-		System.out.println("*** Liste des livres actuel ***");
-		System.out.println("- Ghost in Love par Marc L�vy");
-		System.out.println("- Au soleil redout� par Michel Bussi");
-		System.out.println("- Miroir de nos peines par Pierre Lemaitre");
-		System.out.println("- Le Signal par Maxime Chattam");
-		System.out.println("- Changer l'eau des fleurs par Val�rie Perrin");
-		System.out.println("- Le lambeau par Philippe Lan�on");
-		System.out.println("- Je te promets la libert� par Laurent Gounelle");
-		System.out.println("- Ce que savait la nuit par Arnaldur Indridason");
-		System.out.println("- A la recherche d'Alice Love");
-		System.out.println("- Le Consentement par Vanessa Springora");
+		UtilisateurService us = new UtilisateurService();
+		us.listerLivres();
 	}
 
 	/*************/
