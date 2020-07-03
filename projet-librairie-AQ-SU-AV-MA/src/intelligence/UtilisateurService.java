@@ -132,11 +132,11 @@ public class UtilisateurService {
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 
 		Utilisateur user = ((UtilisateurDaoImpl) userDAO).findByLogin(login);
 		if (user != null) {
-			if (user.getPassword() == mdp) {
+			if (user.getPassword().equals(mdp)) {
 				Session curr = Session.getInstance();
 				curr.connexion(user);
 				return true;
