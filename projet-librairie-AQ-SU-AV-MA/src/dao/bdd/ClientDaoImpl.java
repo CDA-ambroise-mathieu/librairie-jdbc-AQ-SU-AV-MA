@@ -21,22 +21,22 @@ public class ClientDaoImpl implements ClientDao {
 			PreparedStatement ps;
 			try {
 				ps = c.prepareStatement(
-						"INSERT INTO utilisateur (nom,prenom,numeroCompte,login,motDePasse,role) values (?,?,?,?,?,?); ",
+						"INSERT INTO utilisateur (nom,prenom,role,num_compte,login,password) values (?,?,?,?,?,?); ",
 						PreparedStatement.RETURN_GENERATED_KEYS);
 
-				ps.setString(1, client.getNom());
-				ps.setString(2, client.getPrenom());
-				ps.setInt(3, client.getNum_compte());
-				ps.setString(4, client.getLogin());
-				ps.setString(5, client.getPassword());
-				ps.setString(6, client.getRole());
+				ps.setString(1, pClient.getNom());
+				ps.setString(2, pClient.getPrenom());
+				ps.setString(3, pClient.getRole());
+				ps.setInt(4, pClient.getNum_compte());
+				ps.setString(5, pClient.getLogin());
+				ps.setString(6, pClient.getPassword());
 				ps.executeUpdate();
 
 				ResultSet resultat = ps.getGeneratedKeys();
 				if (resultat.next()) {
-					client.setId(resultat.getInt(1));
-					listeDesClients.add(client);
-					return client;
+					pClient.setId_utilisateur(resultat.getInt(1));
+					listeDesClients.add(pClient);
+					return pClient;
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -66,7 +66,8 @@ public class ClientDaoImpl implements ClientDao {
 
 	}
 
-	// Update exemple du nom et prenom, recup avec id
+	// Update exemple du nom et prenom, recup avec id via findById
+	// A Revoir
 	@Override
 	public Client update(Client pClient) {
 		Connection c = MyConnection.getConnection();
@@ -89,13 +90,14 @@ public class ClientDaoImpl implements ClientDao {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
-				PreparedStatement ps = c.prepareStatement("SELECT * FROM utilisateur WHERE id = ?;");
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM utilisateur WHERE id_utilisateur = ?;");
 				ps.setInt(1, client.getId_utilisateur());
 				ResultSet r = ps.executeQuery();
 
 				// Avec un constructeur simple idbdd, nom , prenom
 				if (r.next()) {
-					client = new Client(r.getInt("id"), r.getString("nom"), r.getString("prenom"));
+					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
+							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -104,6 +106,9 @@ public class ClientDaoImpl implements ClientDao {
 		return client;
 	}
 
+	
+	
+	
 	@Override
 	public List<Client> getAll() {
 		Connection c = MyConnection.getConnection();
@@ -120,7 +125,7 @@ public class ClientDaoImpl implements ClientDao {
 			String vPrenom;
 
 			while (vResultatSelect.next()) {
-				vId = vResultatSelect.getInt("id");
+				vId = vResultatSelect.getInt("id_utilisateur");
 				vNom = vResultatSelect.getString("nom");
 				vPrenom = vResultatSelect.getString("prenom");
 
@@ -133,6 +138,63 @@ public class ClientDaoImpl implements ClientDao {
 			e.printStackTrace();
 		}
 		return listeClients;
+	}
+
+	@Override
+	public Client findByPrenom(String pPrenom) {
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE prenom = ?;");
+				ps.setString(1, pPrenom);
+				ResultSet r = ps.executeQuery();
+				if (r.next()) {
+					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
+							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return client;
+	}
+
+	@Override
+	public Client findByNom(String pNom) {
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE nom = ?;");
+				ps.setString(1, pNom);
+				ResultSet r = ps.executeQuery();
+				if (r.next()) {
+					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
+							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return client;
+	}
+
+	@Override
+	public Client findByNumCompte(int pNumCompte) {
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement("SELECT * FROM livre WHERE num_compte = ?;");
+				ps.setInt(1, pNumCompte);
+				ResultSet r = ps.executeQuery();
+				if (r.next()) {
+					client = new Client(r.getInt("id_utilisateur"), r.getString("prenom"), r.getString("nom"),
+							r.getString("role"), r.getInt("num_compte"), r.getString("login"), r.getString("password"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return client;
 	}
 
 }
