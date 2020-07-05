@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import dao.bdd.ClientDaoImpl;
+import dao.bdd.CommandeDaoImpl;
 import intelligence.ClientService;
 import intelligence.LibraireService;
 import intelligence.UtilisateurService;
 import models.Client;
+import models.Commande;
 import models.Livre;
 import models.Session;
 
@@ -323,18 +325,27 @@ public class AffichageConsole {
 			switch(pChoixSML) {
 			case 1: // Valider Compte
 				clientsInscrit.stream().forEach(x->System.out.println("("+x.getId_utilisateur()+")"+x.getLogin()+" : "+x.getPrenom()+" "+x.getNom()));
-				System.out.print("Choix : ");
-				int idLV = scanner.nextInt();
-				scanner.nextLine();
-				ls.validerCreationCompte(cdao.findById(idLV));
+				if(clientsInscrit.size()>0) {
+					System.out.print("Choix : ");
+					int idLV = scanner.nextInt();
+					scanner.nextLine();
+					ls.validerCreationCompte(cdao.findById(idLV));
+				}else {
+					System.out.println("Il n'y a pas de client en attent.");
+				}
 				break;
 
 			case 2: // Refuser Compte
 				clientsInscrit.stream().forEach(x->System.out.println("("+x.getId_utilisateur()+")"+x.getLogin()+" : "+x.getPrenom()+" "+x.getNom()));
-				System.out.print("Choix : ");
-				int idLR = scanner.nextInt();
-				scanner.nextLine();
-				ls.refuserCreationCompte(cdao.findById(idLR));
+				
+				if(clientsInscrit.size() > 0 ) {
+					System.out.print("Choix : ");
+					int idLR = scanner.nextInt();
+					scanner.nextLine();
+					ls.refuserCreationCompte(cdao.findById(idLR));
+				}else {
+					System.out.println("Il n'y a pas de client en attente.");
+				}
 				break;
 				
 			case 3: // Désactiver Compte
@@ -346,7 +357,7 @@ public class AffichageConsole {
 				break;
 
 			case 4: // Lister livre
-				new UtilisateurService().listerLivres();
+				new ClientService().listerClients();
 				break;
 
 			case 5: // Annuler
@@ -364,7 +375,14 @@ public class AffichageConsole {
 				System.out.println("LISTAGE DES COMMANDES");
 				break;
 			case 2: // Changer état commande
-				System.out.println("CHEANGAGE DES COMMANDES");
+				CommandeDaoImpl codao = new CommandeDaoImpl();
+				ArrayList<Commande> commandes = (ArrayList<Commande>) codao.getAll();
+				commandes.stream().forEach(x->System.out.println("("+x.getId()+") "+x.getDateCommande()+" "+x.getId_utilisateur()+" "+x.getEtat()));
+				System.out.print("Choix : ");
+				int choixCommande = scanner.nextInt();
+				scanner.nextLine();
+				Commande pCommande = codao.findById(choixCommande);
+				new LibraireService().modifierStatutCommande(pCommande);
 				break;
 			case 3: // Annuler
 				break;
@@ -411,7 +429,9 @@ public class AffichageConsole {
 			case 3: // Modifier quantité livre
 				ls.modifierQuantiteLivre();
 				break;
-			case 4: // Annuler
+			case 4:
+				listerLivres();
+			case 5: // Annuler
 				break;
 			default:
 				System.out.println("Ce n'est pas un bon choix !");
@@ -442,6 +462,7 @@ public class AffichageConsole {
 			break;
 		case 2: // Annuler une commande
 			cs.annulerCommand();
+			break;
 		case 3: // Lister livres
 			listerLivres();
 			break;

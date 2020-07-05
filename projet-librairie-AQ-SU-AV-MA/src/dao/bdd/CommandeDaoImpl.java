@@ -29,7 +29,8 @@ public class CommandeDaoImpl implements Dao<Commande> {
 				ps.setInt(2, pCommande.getNombreArticles());
 				ps.setInt(3, pCommande.getEtat());
 
-				ps.executeUpdate();
+//				ps.executeUpdate();
+				System.out.println("Ajout en BDD de la commande WIP");
 				ResultSet resultat = ps.getGeneratedKeys();
 				if (resultat.next()) {
 					pCommande.setId(resultat.getInt(1));
@@ -60,15 +61,31 @@ public class CommandeDaoImpl implements Dao<Commande> {
 
 	@Override
 	public Commande update(Commande pCommande) {
-		String requete = "UPDATE Commande SET `date_commande`=?,`nb_articles`=?,`etat`=? WHERE Commande.id_commande = ?"; 
+		String requete = "UPDATE Commande SET `date_commande`=?,`nb_articles`=?,`etat`=? WHERE Commande.id_commande = ?";
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement(requete);
 				ps.setDate(1, pCommande.getDateCommande());
-				ps.setInt(2,  pCommande.getNombreArticles());
+				ps.setInt(2, pCommande.getNombreArticles());
 				ps.setInt(3, pCommande.getEtat());
-				ps.setInt(4,  pCommande.getId());
+				ps.setInt(4, pCommande.getId());
+				ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	public Commande updateState(Commande pCommande, int pEtat) {
+		String requete = "UPDATE Commande SET `etat`=? WHERE Commande.id_commande = ?";
+		Connection c = MyConnection.getConnection();
+		if (c != null) {
+			try {
+				PreparedStatement ps = c.prepareStatement(requete);
+				ps.setInt(1, pCommande.getEtat());
+				ps.setInt(2, pCommande.getId());
 				ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -126,8 +143,8 @@ public class CommandeDaoImpl implements Dao<Commande> {
 		}
 		return listeRetour;
 	}
-	
-	public List<Commande> getAllById(){
+
+	public List<Commande> getAllById() {
 		String request = "SELECT * from commande inner join utilisateur on commande.id_utilisateur = utilisateur.id_utilisateur where utilisateur.id_utilisateur = ?;";
 		PreparedStatement ps;
 		ArrayList<Commande> listeRetour = new ArrayList<>();

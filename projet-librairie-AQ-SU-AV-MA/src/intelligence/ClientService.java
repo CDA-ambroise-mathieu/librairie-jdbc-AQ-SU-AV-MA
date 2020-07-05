@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import dao.Dao;
+import dao.bdd.ClientDaoImpl;
 import dao.bdd.CommandeDaoImpl;
 import dao.bdd.LivreDaoImpl;
+import models.Client;
 import models.Commande;
 import models.Livre;
 
@@ -75,6 +77,12 @@ public class ClientService {
 		curr.getDesignationArticles().entrySet().stream().forEach(x->System.out.println(x.getKey().getTitre()+" : "+x.getValue()));
 		
 		cmdDao.save(curr);
+	}
+	
+	public void listerClients() {
+		ClientDaoImpl cdao = new ClientDaoImpl();
+		ArrayList<Client> clients = (ArrayList<Client>) cdao.getAll();
+		clients.stream().forEach(x->System.out.println("Client : "+x.getNom()+" "+x.getPrenom()));
 	}
 	
 	public String etatCommande(int i) {
