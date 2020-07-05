@@ -75,7 +75,7 @@ public class UtilisateurService {
 		System.out.println("(1) Client");
 		System.out.println("(2) Libraire");
 		String role = new String();
-		String num_compte = new String();
+		boolean inscrit = false;
 		if (sc.hasNextInt()) {
 			int numRole = sc.nextInt();
 			sc.nextLine();
@@ -83,11 +83,10 @@ public class UtilisateurService {
 			switch (numRole) {
 			case 1:
 				role = "client";
-				num_compte = "CLIENT" + (lastEntry + 1);
 				break;
 			case 2:
 				role = "libraire";
-				num_compte = "LIBRAIRE" + (lastEntry + 1);
+				inscrit = true;
 				break;
 			default:
 				System.out.println("Choix non supporté.");
@@ -98,7 +97,7 @@ public class UtilisateurService {
 		}
 
 		if (((UtilisateurDaoImpl) userDAO).findByLogin(login) == null) {
-			Utilisateur tmp = new Utilisateur(nom, prenom, role, login, mdp, false, false);
+			Utilisateur tmp = new Utilisateur(nom, prenom, role, login, mdp, inscrit, false);
 			tmp = userDAO.save(tmp);
 
 			if (tmp != null) {
@@ -137,9 +136,13 @@ public class UtilisateurService {
 		Utilisateur user = ((UtilisateurDaoImpl) userDAO).findByLogin(login);
 		if (user != null) {
 			if (user.getPassword().equals(mdp)) {
-				Session curr = Session.getInstance();
-				curr.connexion(user);
-				return true;
+				if(user.getInscrit() == true) {
+					Session curr = Session.getInstance();
+					curr.connexion(user);
+					return true;
+				}else {
+					System.out.println("Votre compte n'a pas été validé par le libraire. Veuillez vous référer à ce dernier.");
+				}
 			} else {
 				System.out.println("Mot de passe incorrect !");
 			}
