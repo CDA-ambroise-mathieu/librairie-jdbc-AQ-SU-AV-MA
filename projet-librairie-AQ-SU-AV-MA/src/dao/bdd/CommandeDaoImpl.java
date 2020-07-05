@@ -84,7 +84,7 @@ public class CommandeDaoImpl implements Dao<Commande> {
 		if (c != null) {
 			try {
 				PreparedStatement ps = c.prepareStatement(requete);
-				ps.setInt(1, pCommande.getEtat());
+				ps.setInt(1, pEtat);
 				ps.setInt(2, pCommande.getId());
 				ps.executeUpdate();
 			} catch (SQLException e) {
