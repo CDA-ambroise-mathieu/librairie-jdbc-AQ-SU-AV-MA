@@ -97,6 +97,7 @@ public class UtilisateurService {
 		}
 
 		if (((UtilisateurDaoImpl) userDAO).findByLogin(login) == null) {
+			System.out.println(inscrit);
 			Utilisateur tmp = new Utilisateur(nom, prenom, role, login, mdp, inscrit, false);
 			tmp = userDAO.save(tmp);
 
