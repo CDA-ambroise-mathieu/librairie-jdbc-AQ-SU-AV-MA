@@ -325,18 +325,27 @@ public class AffichageConsole {
 			switch(pChoixSML) {
 			case 1: // Valider Compte
 				clientsInscrit.stream().forEach(x->System.out.println("("+x.getId_utilisateur()+")"+x.getLogin()+" : "+x.getPrenom()+" "+x.getNom()));
-				System.out.print("Choix : ");
-				int idLV = scanner.nextInt();
-				scanner.nextLine();
-				ls.validerCreationCompte(cdao.findById(idLV));
+				if(clientsInscrit.size()>0) {
+					System.out.print("Choix : ");
+					int idLV = scanner.nextInt();
+					scanner.nextLine();
+					ls.validerCreationCompte(cdao.findById(idLV));
+				}else {
+					System.out.println("Il n'y a pas de client en attent.");
+				}
 				break;
 
 			case 2: // Refuser Compte
 				clientsInscrit.stream().forEach(x->System.out.println("("+x.getId_utilisateur()+")"+x.getLogin()+" : "+x.getPrenom()+" "+x.getNom()));
-				System.out.print("Choix : ");
-				int idLR = scanner.nextInt();
-				scanner.nextLine();
-				ls.refuserCreationCompte(cdao.findById(idLR));
+				
+				if(clientsInscrit.size() > 0 ) {
+					System.out.print("Choix : ");
+					int idLR = scanner.nextInt();
+					scanner.nextLine();
+					ls.refuserCreationCompte(cdao.findById(idLR));
+				}else {
+					System.out.println("Il n'y a pas de client en attente.");
+				}
 				break;
 				
 			case 3: // Désactiver Compte
@@ -453,6 +462,7 @@ public class AffichageConsole {
 			break;
 		case 2: // Annuler une commande
 			cs.annulerCommand();
+			break;
 		case 3: // Lister livres
 			listerLivres();
 			break;
