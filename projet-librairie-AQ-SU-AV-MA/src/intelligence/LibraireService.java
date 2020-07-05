@@ -25,14 +25,24 @@ public class LibraireService {
 	}
 
 	public void modifierStatutCommande(Commande pCommande) {
-
+		CommandeDaoImpl cdao = new CommandeDaoImpl();
+		System.out.println("Modifier l'état de la commande par : ");
+		System.out.println("1- En préparation");
+		System.out.println("2- Validée");
+		System.out.println("3- En cours de livraison");
+		System.out.println("4- Livrée");
+		System.out.println("5- Annulée");
+		int etat = sc.nextInt();
+		sc.nextLine();
+		pCommande.setEtat(etat);
+		cdao.updateState(pCommande, etat);
 	}
 
 	public void masquerCompteClient(Client pClient) {
 		ClientDaoImpl cdao = new ClientDaoImpl();
 		pClient.setMasque(true);
 		cdao.update(pClient);
-		
+
 	}
 
 	public void validerCreationCompte(Client pClient) {
@@ -49,8 +59,8 @@ public class LibraireService {
 
 	public void ajouterLivre(Livre pLivre) {
 		LivreDao ldao = new LivreDaoImpl();
-		Livre present  = ldao.findByTitre(pLivre.getTitre());
-		if(present == null) {
+		Livre present = ldao.findByTitre(pLivre.getTitre());
+		if (present == null) {
 			ldao.save(pLivre);
 		}
 	}
@@ -58,24 +68,25 @@ public class LibraireService {
 	public void supprimerLivre() {
 		LivreDao ldao = new LivreDaoImpl();
 		ArrayList<Livre> livres = (ArrayList<Livre>) ldao.getAll();
-		livres.stream().forEach(x->System.out.println("("+x.getId()+") "+x.getTitre()+" "+x.getAuteur()+" "+x.getAnneeParution()));
-		
+		livres.stream().forEach(x -> System.out
+				.println("(" + x.getId() + ") " + x.getTitre() + " " + x.getAuteur() + " " + x.getAnneeParution()));
+
 		System.out.print("Quel livre supprimer : ");
 		int idLS = sc.nextInt();
 		sc.nextLine();
-		
+
 		Livre suppr = ldao.findById(idLS);
-		if(suppr != null) {
-			if(!((LivreDaoImpl)ldao).livreCommandee(suppr)) {
+		if (suppr != null) {
+			if (!((LivreDaoImpl) ldao).livreCommandee(suppr)) {
 				ldao.remove(suppr);
-			}else {
+			} else {
 				System.out.println("Le livre est présent dans des commandes.");
 			}
 		}
 	}
 
 	public void modifierStockLivre() {
-		//VOIR MODIFIER QUANTITE LIVRE
+		// VOIR MODIFIER QUANTITE LIVRE
 	}
 
 	public void afficherHistoriqueCommande() {
@@ -85,21 +96,22 @@ public class LibraireService {
 	public void modifierQuantiteLivre() {
 		LivreDao ldao = new LivreDaoImpl();
 		ArrayList<Livre> livres = (ArrayList<Livre>) ldao.getAll();
-		livres.stream().forEach(x->System.out.println("("+x.getId()+") "+x.getTitre()+" "+x.getAuteur()+" "+x.getAnneeParution()+" "+x.getQuantiteEnStock()));
-		
+		livres.stream().forEach(x -> System.out.println("(" + x.getId() + ") " + x.getTitre() + " " + x.getAuteur()
+				+ " " + x.getAnneeParution() + " " + x.getQuantiteEnStock()));
+
 		System.out.print("Quel livre a modifier le stock : ");
 		int idLS = sc.nextInt();
 		sc.nextLine();
-		
+
 		Livre stock = ldao.findById(idLS);
-		if(stock != null) {
+		if (stock != null) {
 			System.out.println("blblb");
 			System.out.print("Quelle est la nouvelle quantité : ");
 			int qte = sc.nextInt();
 			sc.nextLine();
 			stock.setQuantiteEnStock(qte);
 		}
-		((LivreDaoImpl)ldao).update(stock);
+		((LivreDaoImpl) ldao).update(stock);
 	}
-	
+
 }
