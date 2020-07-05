@@ -89,7 +89,7 @@ public class CommandeDaoImpl implements Dao<Commande> {
 				ResultSet r = ps.executeQuery();
 				if (r.next())
 					commande = new Commande(r.getInt("id_commande"), r.getDate("date_commande"),
-							r.getInt("nb_articles"), r.getInt("etat"));
+							r.getInt("nb_articles"), r.getInt("etat"), r.getInt("id_utilisateur"));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
