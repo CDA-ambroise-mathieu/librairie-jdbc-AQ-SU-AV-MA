@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
 import dao.Dao;
@@ -30,7 +29,8 @@ public class CommandeDaoImpl implements Dao<Commande> {
 				ps.setInt(2, pCommande.getNombreArticles());
 				ps.setInt(3, pCommande.getEtat());
 
-				ps.executeUpdate();
+//				ps.executeUpdate();
+				System.out.println("Ajout en BDD de la commande WIP");
 				ResultSet resultat = ps.getGeneratedKeys();
 				if (resultat.next()) {
 					pCommande.setId(resultat.getInt(1));
