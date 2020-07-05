@@ -25,10 +25,6 @@ public class LibraireService {
 	}
 
 	public void modifierStatutCommande(Commande pCommande) {
-		listerCommandes();
-		System.out.println("Saisissez l'ID de la commande :");
-		int idCommande = sc.nextInt();
-		sc.nextInt();
 		System.out.println("Modifier l'état de la commande par : ");
 		System.out.println("1- En préparation");
 		System.out.println("2- Validée");
@@ -44,9 +40,9 @@ public class LibraireService {
 	}
 
 	public void listerCommandes() {
-		ArrayList<Commande> commandes = (ArrayList<Commande>) CmdDAO.getAll();
+		ArrayList<Commande> commandes = (ArrayList<Commande>) commandeDao.getAll();
 		for (Commande commande : commandes) {
-			System.out.println("("+commande.getId()+") "+commande.getNombreArticles()+" "+commande.getDateCommande()+" "+etatCommande(commande.getEtat()));
+			System.out.println("("+commande.getId()+") "+commande.getNombreArticles()+" "+commande.getDateCommande()+" "+commande.getEtat());
 			
 		}
 	}
