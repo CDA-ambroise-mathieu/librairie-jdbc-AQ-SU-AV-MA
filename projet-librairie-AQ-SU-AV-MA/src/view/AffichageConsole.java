@@ -1,8 +1,14 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import dao.bdd.ClientDaoImpl;
+import intelligence.ClientService;
+import intelligence.LibraireService;
 import intelligence.UtilisateurService;
+import models.Client;
+import models.Livre;
 import models.Session;
 
 /**
@@ -69,9 +75,11 @@ public class AffichageConsole {
 			//user : Client
 			case "client":
 				System.out.println("(1) Mes Commandes");
-				System.out.println("(2) Lister Livre");
-				System.out.println("(3) Déconnexion");
-				System.out.println("(4) Quitter");
+				System.out.println("(2) Annuler Commande");
+				System.out.println("(3) Lister Livre");
+				System.out.println("(4) Commander des livres");
+				System.out.println("(5) Déconnexion");
+				System.out.println("(6) Quitter");
 				System.out.print("Choix : ");
 				
 				//checking next input is an Integer
@@ -183,6 +191,7 @@ public class AffichageConsole {
 	public void deconnexion() {
 		if (!this.testRole.equals("invite")) {
 			this.testRole = "invite";
+			Session.getInstance().deconnexion();
 		} else {
 			System.out.println("Vous êtes déjà déconnecté !");
 		}
@@ -303,25 +312,41 @@ public class AffichageConsole {
 	 * @param pChoixSML user choice of the sub menu
 	 */
 	public void choixSousMenuLibraire(int pChoixML, int pChoixSML) {
+		LibraireService ls = new LibraireService();
+		ClientDaoImpl cdao = new ClientDaoImpl();
+		ArrayList<Client> clients = (ArrayList<Client>) cdao.getAll();
+		ArrayList<Client> clientsInscrit = (ArrayList<Client>) cdao.getAllInscrit();
 		switch (pChoixML) {
 		case 1: // Client
-
+		
 			// L'utilisateur a choisi précédemment le sous menu Client
 			switch(pChoixSML) {
 			case 1: // Valider Compte
-				System.out.println("VALIDATION DE COMPTE");
+				clientsInscrit.stream().forEach(x->System.out.println("("+x.getId_utilisateur()+")"+x.getLogin()+" : "+x.getPrenom()+" "+x.getNom()));
+				System.out.print("Choix : ");
+				int idLV = scanner.nextInt();
+				scanner.nextLine();
+				ls.validerCreationCompte(cdao.findById(idLV));
 				break;
 
 			case 2: // Refuser Compte
-				System.out.println("REFUS DE COMPTE");
+				clientsInscrit.stream().forEach(x->System.out.println("("+x.getId_utilisateur()+")"+x.getLogin()+" : "+x.getPrenom()+" "+x.getNom()));
+				System.out.print("Choix : ");
+				int idLR = scanner.nextInt();
+				scanner.nextLine();
+				ls.refuserCreationCompte(cdao.findById(idLR));
 				break;
 				
 			case 3: // Désactiver Compte
-				System.out.println("DESACTION DE COMPTE");
+				clients.stream().forEach(x->System.out.println("("+x.getId_utilisateur()+")"+x.getLogin()+" : "+x.getPrenom()+" "+x.getNom()));
+				System.out.print("Choix : ");
+				int idLM = scanner.nextInt();
+				scanner.nextLine();
+				ls.masquerCompteClient(cdao.findById(idLM));
 				break;
 
 			case 4: // Lister livre
-				System.out.println("LISTER LES CLIENTS");
+				new UtilisateurService().listerLivres();
 				break;
 
 			case 5: // Annuler
@@ -353,13 +378,38 @@ public class AffichageConsole {
 		case 3: //  Livre
 			switch(pChoixSML) {
 			case 1: // Ajouter livre
-				System.out.println("AJOUT D'UN LIVRE ");
+				System.out.println("*** Ajout d'un nouveau livre ***");
+				System.out.print("libelé : ");
+				String lbl = scanner.nextLine();
+				
+				System.out.print("titre : ");
+				String titre = scanner.nextLine();
+				
+				System.out.print("auteur : ");
+				String auteur = scanner.nextLine();
+				
+				System.out.print("edition : ");
+				String edition = scanner.nextLine();
+				
+				System.out.print("annee de parution : ");
+				int annee = scanner.nextInt();
+				scanner.nextLine();
+				
+				System.out.print("quantité en stock : ");
+				int stock = scanner.nextInt();
+				scanner.nextLine();
+				
+				System.out.print("prix unitaire : ");
+				double prix = scanner.nextDouble();
+				
+				Livre livre = new Livre(lbl, titre, auteur, edition, annee, stock, prix);
+				ls.ajouterLivre(livre);
 				break;
 			case 2: // Supprimer livre
-				System.out.println("SUPPRESSION D'UN LIVRE ");
+				ls.supprimerLivre();
 				break;
 			case 3: // Modifier quantité livre
-				System.out.println("MODIFICATION D'UN LIVRE ");
+				ls.modifierQuantiteLivre();
 				break;
 			case 4: // Annuler
 				break;
@@ -384,17 +434,24 @@ public class AffichageConsole {
 	 * @param choix user choice of the main menu
 	 */
 	public void choixMenuClient(int choix) {
+		ClientService cs = new ClientService();
 		switch (choix) {
 		case 1: // Mes Commandes
-			System.out.println("LISTING DES COMMANDES");
+			System.out.println("*** LISTING DES COMMANDES ***");
+			cs.listerCommandes();
 			break;
-		case 2: // Lister livres
+		case 2: // Annuler une commande
+			cs.annulerCommand();
+		case 3: // Lister livres
 			listerLivres();
 			break;
-		case 3: // Déconnexion
+		case 4: // Commander des livres
+			cs.commander();
+			break;
+		case 5: // Déconnexion
 			deconnexion();
 			break;
-		case 4: // Quitter
+		case 6: // Quitter
 			quitter();
 			break;
 		default:

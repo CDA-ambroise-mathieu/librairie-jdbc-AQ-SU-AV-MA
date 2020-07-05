@@ -67,6 +67,22 @@ public class Utilisateur {
 		this.nom = pNom;
 	}
 
+	public void setInscrit(Boolean b) {
+		this.inscrit = b;
+	}
+	
+	public void setMasque(Boolean b) {
+		this.masque = b;
+	}
+	
+	public boolean getInscrit() {
+		return this.inscrit;
+	}
+	
+	public boolean getMasque() {
+		return this.masque;
+	}
+	
 	public Utilisateur(int id_utilisateur, String nom, String prenom) {
 		super();
 		this.id_utilisateur = id_utilisateur;

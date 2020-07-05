@@ -70,18 +70,8 @@ public class ClientDaoImpl implements ClientDao {
 	@Override
 	public Client update(Client pClient) {
 		Connection c = MyConnection.getConnection();
-		if (c != null) {
-			try {
-				PreparedStatement ps = c.prepareStatement("UPDATE utilisateur SET nom= ? , prenom =? WHERE id=?");
-				ps.setString(1, pClient.getNom());
-				ps.setString(1, pClient.getPrenom());
-				ps.setInt(3, pClient.getId_utilisateur());
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
+		UtilisateurDaoImpl udao = new UtilisateurDaoImpl();
+		return (Client) udao.update(pClient);
 	}
 
 	@Override
@@ -136,6 +126,36 @@ public class ClientDaoImpl implements ClientDao {
 		return listeClients;
 	}
 
+	public List<Client> getAllInscrit(){
+		Connection c = MyConnection.getConnection();
+		List<Client> listeClients = new ArrayList<>();
+		PreparedStatement ps;
+
+		try {
+			ps = c.prepareStatement("SELECT * FROM utilisateur WHERE role = 'client' and inscrit = false;");
+			ResultSet vResultatSelect = ps.executeQuery();
+
+			// Exemple avec Client idbdd, nom, prenom --> autres attributs à ajouter
+			int vId;
+			String vNom;
+			String vPrenom;
+
+			while (vResultatSelect.next()) {
+				vId = vResultatSelect.getInt("id_utilisateur");
+				vNom = vResultatSelect.getString("nom");
+				vPrenom = vResultatSelect.getString("prenom");
+
+				client = new Client(vId, vNom, vPrenom);
+
+				listeClients.add(client);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listeClients;
+	}
+	
 	public Client findByLogin(String pLogin) {
 		Connection c = MyConnection.getConnection();
 		if (c != null) {
