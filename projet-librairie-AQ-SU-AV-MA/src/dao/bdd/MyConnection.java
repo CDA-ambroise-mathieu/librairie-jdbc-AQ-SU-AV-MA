@@ -24,4 +24,9 @@ public class MyConnection {
 		}
 		return connexion;
 	}
+
+	public static void main(String args[]) {
+
+	}
+
 }
