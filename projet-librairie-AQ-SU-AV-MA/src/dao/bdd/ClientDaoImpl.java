@@ -132,7 +132,7 @@ public class ClientDaoImpl implements ClientDao {
 		PreparedStatement ps;
 
 		try {
-			ps = c.prepareStatement("SELECT * FROM utilisateur WHERE role = 'client' and inscrit = false;");
+			ps = c.prepareStatement("SELECT * FROM utilisateur WHERE role = 'client' and inscrit = false and masque = false;");
 			ResultSet vResultatSelect = ps.executeQuery();
 
 			// Exemple avec Client idbdd, nom, prenom --> autres attributs à ajouter
